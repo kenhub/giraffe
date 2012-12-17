@@ -76,4 +76,4 @@ OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 
 ##More?
 
-Check out the different demo dashboards for more information about making your own giraffe awesome.
+Check out the different [demo dashboards](http://kenhub.github.com/giraffe/) for more information about making your own giraffe awesome.
