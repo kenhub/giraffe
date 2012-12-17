@@ -1,5 +1,12 @@
 #Giraffe : A [Graphite](http://graphite.wikidot.com) Dashboard with a long neck ![giraffe logo](https://raw.github.com/kenhub/giraffe/master/img/giraffe.png)
 
+##Don't know Graphite?
+
+... then Giraffe is probably not for you. But before you walk away - you should definitely check out graphite! [see
+why](http://codeascraft.etsy.com/2011/02/15/measure-anything-measure-everything/). 
+
+Need a quick way to install graphite? try [graphite-fabric](https://github.com/gingerlime/graphite-fabric).
+
 ##Stack
 
 Giraffe is based on a number of amazing open-source projects and libraries, to name a few:
