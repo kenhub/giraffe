@@ -1,0 +1,112 @@
+/* ==========================================================================
+   Giraffe custom styles
+   ========================================================================== */
+
+body {
+    background: url("../img/giraffe-bg.png") fixed center center;
+    padding-top: 40px;
+    padding-bottom: 0;
+}
+
+body > .container {
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 0 20px 20px;
+    -webkit-oborder-radius: 0 0 8px 8px;
+    -moz-border-radius: 0 0 8px 8px;
+    border-radius: 0 0 8px 8px;
+}
+
+#giraffe-navbar-inner {
+  background-color: #fafafa;
+  background-image: -moz-linear-gradient(top, #ffb100, #d65100);
+  background-image: -ms-linear-gradient(top, #ffb100, #d65100);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffb100), to(#d65100));
+  background-image: -webkit-linear-gradient(top, #ffb100, #d65100);
+  background-image: -o-linear-gradient(top, #ffb100, #d65100);
+  background-image: linear-gradient(top, #ffb100, #d65100);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#'ffb100, endColorstr='#'d65100, GradientType=0);
+  -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
+     -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
+          box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
+}
+
+.navbar .brand {
+  /* color: #d65100; */
+  color: white;
+  text-shadow: none;
+}
+
+.navbar .brand:hover {
+  text-decoration: none;
+  color: white;
+}
+
+.navbar .nav > li > a {
+  /* color: #d65100; */
+  color: white;
+  text-shadow: none;
+  text-decoration: none;
+}
+
+.navbar-inverse .nav li.dropdown > .dropdown-toggle .caret {
+    border-top-color: white;
+    border-bottom-color: white;
+}
+
+.navbar-inverse .navbar-inner {
+    border-color: #d65100;
+}
+
+.navbar-inverse .nav li.dropdown.open > .dropdown-toggle, .navbar-inverse .nav li.dropdown.active > .dropdown-toggle, .navbar-inverse .nav li.dropdown.open.active > .dropdown-toggle {
+    color: #d65100;
+    background-color: white;
+}
+
+.btn-small, .btn-small.active {
+    color: #d65100;
+}
+
+.page-header h1 {
+    color: #d65100;
+}
+
+h2 {
+    font-size: 24.5px;
+}
+
+h2, h3 {
+    color: #9a5f00;
+}
+
+.page-header {
+    margin: 0px 0 30px;
+    padding-top: 15px;
+}
+
+.dashboard-content {
+    padding-right: 20px;
+    padding-left: 20px;
+}
+
+.dashboard-content,
+#graphs {
+    background-color: white;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 1);
+    border-radius: 0 0 8px 8px;
+}
+.legend {
+    margin-top: 9px;
+    display: none;
+}
+
+.nav-collapse .btn-toolbar {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+/* .rickshaw_graph .detail .x_label { */
+/*     display: none; */
+/* } */
+/* .rickshaw_graph .detail .item.active { */
+/*     opacity:1; */
+/*     display: none; */
+/* } */

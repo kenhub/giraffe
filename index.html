@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html class="no-js">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link href="favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" />
+        <style>
+            body {
+                padding-top: 60px;
+                padding-bottom: 40px;
+            }
+        </style>
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/graph.css">
+        <link rel="stylesheet" href="css/detail.css">
+        <link rel="stylesheet" href="css/legend.css">
+        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/font-awesome.css">
+
+        <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+    </head>
+    <body>
+
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div id="giraffe-navbar-inner" class="navbar-inner">
+                <div class="container">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <div class="brand">Giraffe</div>
+                    <div class="nav-collapse collapse">
+                        <ul class="nav">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dashboards <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                </ul>
+                            </li>
+                        </ul>
+                        <div class="btn-toolbar pull-right">
+                            <div class="btn-group timepanel">
+                                <a class="btn btn-small range" data-timeframe="10" href="#10m">10m</a>
+                                <a class="btn btn-small range" data-timeframe="60" href="#1h">1h</a>
+                                <a class="btn btn-small range" data-timeframe="180" href="#3h">3h</a>
+                                <a class="btn btn-small range" data-timeframe="1440" href="#1d">1d</a>
+                                <a class="btn btn-small range" data-timeframe="10080" href="#1w">1w</a>
+                                <a class="btn btn-small range" data-timeframe="20160" href="#2w">2w</a>
+                                <a class="btn btn-small range" data-timeframe="70560" href="#7w">7w</a>
+                            </div>
+                            <a id="legend-toggle" class="btn btn-small toggle" title="legend" href="#"><i class="icon-list-alt"></i></a>
+                            <a id="axis-toggle" class="btn btn-small toggle active" title="grid" href="#"><i class="icon-th"></i></a>
+                            <a id="x-label-toggle" class="btn btn-small toggle active" title="x labels" href="#"><i class="icon-comment"></i></a>
+                            <a id="x-item-toggle" class="btn btn-small toggle active" title="x tooltip" href="#"><i class="icon-remove-circle"></i></a>
+                        </div>   
+                    </div><!--/.nav-collapse -->
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="dashboard-content">
+                <div class="page-header"><h1></h1></div>
+                <div id="graphs"></div>
+            </div>
+
+        </div> <!-- /container -->
+
+        <!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>-->
+        <!--<script>window.jQuery || document.write('<script src="js/vendor/jquery-1.8.3.min.js"><\\/script>')</script>-->
+        <script src="js/vendor/jquery-1.8.3.min.js"></script>
+
+        <script src="js/vendor/bootstrap.min.js"></script>
+        <script src="js/vendor/jquery-ui.min.js"></script>
+        <script src="js/vendor/jquery.rule-1.0.2-min.js"></script>
+        <script src="js/vendor/underscore-min.js"></script>
+        <script src="js/vendor/mustache.js"></script>
+        <script src="js/vendor/jquery.ba-bbq.min.js"></script>
+        <script src="js/vendor/d3.v2.min.js"></script>
+        <script src="js/vendor/rickshaw.min.js"></script>
+        <script src="js/vendor/Markdown.Converter.js"></script>
+
+        <script src="dashboards.js"></script>
+        <script src="js/giraffe.js"></script>
+    </body>
+</html>
