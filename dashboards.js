@@ -112,7 +112,7 @@ var dashboards =
                 +"\n"
                 +"\n##Installation"
                 +"\n"
-                +"\nTo install giraffe, simply [download](#) the code and run it from your browser."
+                +"\nTo install giraffe, simply [download](https://github.com/kenhub/giraffe/archive/master.zip) the code and run it from your browser."
                 +"\nYou can put it on any type of web server, and also open the `index.html` file from your local drive."
                 +"\n"
                 +"\n##Authentication"
