@@ -39,7 +39,7 @@ Because we wanted to create a dashboard that has all the benefits and none of th
 
 * see [dashboards.js](https://github.com/kenhub/giraffe/blob/master/dashboards.js)
 * check out the [demo](http://kenhub.github.com/giraffe/) for some of the available options and more information
-* Clone the repository or download and take your giraffe for a spin. You can run it from your desktop.
+* Clone the repository or [download](https://github.com/kenhub/giraffe/archive/master.zip) and take your giraffe for a spin. You can run it from your desktop.
 
 ##Development
 
