@@ -26,7 +26,7 @@ Because we wanted to create a dashboard that has all the benefits and none of th
 * **No server required** - Giraffe can be installed on any server, or even run from a folder. Just copy the files and you're done.
 * **Beautiful, real-time visualization** - using Rickshaw to create visually appealing, interactive charts.
 * **Flexible** - supports many dashboards, different metrics, annotations, colour schemes, time intervals, summary options, CSS and more.
-* **Easy to use** - configuration is done from one (javascript) file with a reasonbly clear and documented options. You
+* **Easy to use** - configuration is done from [one (javascript) file](https://github.com/kenhub/giraffe/blob/master/dashboards.js) with a reasonbly clear and documented options. You
   don't even need to know javascript to configure it, but it's not very tolerant to typos or missing commas.
 
 ##Issues
@@ -35,7 +35,13 @@ Because we wanted to create a dashboard that has all the benefits and none of th
 * Consequently, when adding many metrics to a single dashboard, and particularly when metrics have many data points and
   series, the experience might get sluggish. With great power comes great responsibility. Design your dashboards with care.
 
-## Development
+##Configuration
+
+* see [dashboards.js](https://github.com/kenhub/giraffe/blob/master/dashboards.js)
+* check out the [demo](http://kenhub.github.com/giraffe/) for some of the available options and more information
+* Clone the repository or download and take your giraffe for a spin. You can run it from your desktop.
+
+##Development
 
 Feedback, suggestions and bug reports are most welcome. But of course code speaks louder than words. Feel free to make
 contributions via pull requests on github.
@@ -44,7 +50,7 @@ The core code lives in `js/src/giraffe.coffee`.
 Since the `dashboards.js` configuration needs easy access to everything inside `giraffe.js`, please compile the coffeescript
 using the `--bare` option.
 
-##WHo is behind Giraffe?
+##Who is behind Giraffe?
 
 Giraffe was developed at [kenHub](https://www.kenhub.com). We are not much of techie startup, but we hope to build the
 best tools for learning anatomy and medicine online. To do that, we wanted to be able to measure our application,
