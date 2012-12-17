@@ -126,7 +126,7 @@ var dashboards =
                 +"\nThe main configuration for all dashboards is found in `dashboards.js`. The file is reasonably self-explanatory, "
                 +"\nso please take a look."
                 +"\n"
-                +"\nIf you need to change the page layout, CSS, or add/remote a time period, you can also edit `index.html` and `css/main.css` file."
+                +"\nIf you need to change the page layout, CSS, or add/remove a time period, you can also edit `index.html` and `css/main.css` file."
                 +"\n"
                 ,
     "metrics": 
