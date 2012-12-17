@@ -1,4 +1,5 @@
-#Giraffe : A [Graphite](http://graphite.wikidot.com) Dashboard with a long neck <img class='pull-right' src='img/giraffe.png' />
+#Giraffe : A [Graphite](http://graphite.wikidot.com) Dashboard with a long neck <img class='pull-right'
+src='https://raw.github.com/kenhub/giraffe/master/img/giraffe.png' />
 
 ##Stack
 
