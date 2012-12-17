@@ -8,7 +8,7 @@ var dashboards =
     "description": "#Giraffe : A [Graphite](http://graphite.wikidot.com) Dashboard with a long neck <img class='pull-right' src='img/giraffe.png' />"
                 +"\n"
                 +"\n<br/>"
-                +"\n<a class='btn btn-large btn-warning' href='#'><i class='icon-github icon-large'></i> View project on github</a>"
+                +"\n<a class='btn btn-large btn-warning' href='https://github.com/kenhub/giraffe'><i class='icon-github icon-large'></i> View project on github</a>"
                 +"\n"
                 +"\n##More?"
                 +"\n"
