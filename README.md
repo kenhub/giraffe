@@ -44,8 +44,56 @@ Because we wanted to create a dashboard that has all the benefits and none of th
 
 ##Configuration
 
+###Quick overview
+
+Almost all configuration is placed in one file : [dashboards.js](https://github.com/kenhub/giraffe/blob/master/dashboards.js). Here's a small snippet with some key configuration options:
+
+```
+var graphite_url = "demo";  // enter your graphite url, e.g. http://your.graphite.com
+
+var dashboards = 
+[
+  { "name": "Users",  // give your dashboard a name (required!)
+    "refresh": 5000,  // each dashboard has its own refresh interval (in ms)
+    // add an (optional) dashboard description. description can be written in markdown / html.
+    "description": "#User engagement
+                +"\n"
+                +"\nThis dashboard tracks user engagement (signups, registrations etc)"
+                ,
+    "metrics":  // metrics is an array of charts on the dashboard
+    [
+      {
+        "alias": "signups",  // display name for this metric
+        "target": "sumSeries(enter.your.graphite.metrics.here)",  // enter your graphite barebone target expression here
+        "description": "New signups to the website",  // enter your metric description here
+        "summary": "sum",  // available options: [sum|min|max|avg|last|<function>]
+      },
+      {
+        "alias": "signup breakdown",
+        "target": "sumSeries(enter.your.graphite.metrics.here)", 
+        "description": "signup breakdown based on site location",
+        "renderer": "area",  // use any rickshaw-supported renderer
+        "unstack": true  // other parameters like unstack, interpolation, stroke are also available (see rickshaw documentation for more info)
+      },
+      {
+        "alias": "Registration breakdown",
+        "target": "sumSeries(enter.your.graphite.metrics.here)", 
+        // target can use a javascript function. This allows using dynamic parameters (e.g. period). See a few functions
+        // at the bottom of the dashboards.js file.
+        "target": function() { return 'summarize(events.registration.success,"' + entire_period() + 'min)' },
+        "renderer": "bar",
+        "description": "Registrations based on channel",
+      },
+    ]
+  },
+  ...
+
+```
+
+###More configuration options
+
 * see [dashboards.js](https://github.com/kenhub/giraffe/blob/master/dashboards.js)
-* check out the [demo](http://kenhub.github.com/giraffe/) for some of the available options and more information
+* check out the [demo](http://kenhub.github.com/giraffe/) to see some of the configuration options in-action 
 * Clone the repository or [download](https://github.com/kenhub/giraffe/archive/master.zip) and take your giraffe for a spin. You can run it from your desktop.
 
 ##Development
