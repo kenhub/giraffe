@@ -48,7 +48,7 @@ Because we wanted to create a dashboard that has all the benefits and none of th
 
 Almost all configuration is placed in one file : [dashboards.js](https://github.com/kenhub/giraffe/blob/master/dashboards.js). Here's a small snippet with some key configuration options:
 
-```
+```javascript
 var graphite_url = "demo";  // enter your graphite url, e.g. http://your.graphite.com
 
 var dashboards = 
