@@ -70,7 +70,7 @@ var dashboards =
       },
       {
         "alias": "signup breakdown",
-        "target": "sumSeries(enter.your.graphite.metrics.here)", 
+        "target": "sumSeries(stats.*.event)",  // target can use any graphite-supported wildcards
         "description": "signup breakdown based on site location",
         "renderer": "area",  // use any rickshaw-supported renderer
         "unstack": true  // other parameters like unstack, interpolation, stroke are also available (see rickshaw documentation for more info)

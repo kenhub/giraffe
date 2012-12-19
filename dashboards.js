@@ -77,7 +77,7 @@ var dashboards =
     [
       {
         "alias": "cpu utilization",
-        "target": "aliasByNode(derivative(servers.system.cpu.*),4)",
+        "target": "aliasByNode(derivative(servers.system.cpu.*),4)",  // target can use any graphite-supported wildcards
         "annotator": 'events.deployment',  // a simple annotator will track a graphite event and mark it as 'deployment'.
                                            // enter your graphite target as a string
         "description": "cpu utilization on production (using linear interpolation). Summary displays the average across all series",
