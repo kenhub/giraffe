@@ -5,7 +5,7 @@
 ... then Giraffe is probably not for you. But before you walk away - you should definitely check out graphite! [see
 why](http://codeascraft.etsy.com/2011/02/15/measure-anything-measure-everything/). 
 
-Need a quick way to install graphite? try [graphite-fabric](https://github.com/gingerlime/graphite-fabric).
+Need a quick way to install and play with graphite? try [graphite-fabric](https://github.com/gingerlime/graphite-fabric).
 
 ##Stack
 
@@ -34,7 +34,7 @@ Because we wanted to create a dashboard that has all the benefits and none of th
 * **Beautiful, real-time visualization** - using Rickshaw to create visually appealing, interactive charts.
 * **Flexible** - supports many dashboards, different metrics, annotations, colour schemes, time intervals, summary options, CSS and more.
 * **Easy to use** - configuration is done from [one (javascript) file](https://github.com/kenhub/giraffe/blob/master/dashboards.js) with a reasonbly clear and documented options. You
-  don't even need to know javascript to configure it, but it's not very tolerant to typos or missing commas.
+  don't even need to know javascript to configure it. Be aware that it's not very tolerant to typos or missing commas.
 
 ##Issues
 
