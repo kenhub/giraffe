@@ -115,12 +115,30 @@ init = ->
   clearInterval(refreshTimer) if refreshTimer
   refreshTimer = setInterval(dataPoll, refreshInterval)
 
+getTargetColor = (targets, target) ->
+  return unless typeof targets is 'object'
+  for t in targets
+    continue unless t.color
+    if t.target == target or t.alias == target
+      return t.color
+
+generateGraphiteTargets = (targets) ->
+  # checking if single target (string) or a function
+  if typeof targets is "string" then return "&target=#{targets}"
+  if typeof targets is "function" then return "&target=#{targets()}"
+  # handling multiple targets
+  graphite_targets = ""
+  for target in targets
+    graphite_targets += "&target=#{target}" if typeof target is "string"
+    graphite_targets += "&target=#{target()}" if typeof target is "function"
+    graphite_targets += "&target=#{target?.target || ''}" if typeof target is "object"
+  return graphite_targets
 
 # generate a URL to retrieve data from graphite
-generateDataURL= (target, annotator_target) ->
-  target = target() if typeof target is "function"
+generateDataURL= (targets, annotator_target) ->
   annotator_target = if annotator_target then "&target=#{annotator_target}" else ""
-  "#{graphite_url}/render?from=-#{period}minutes&target=#{target}#{annotator_target}&format=json&jsonp=?"
+  data_targets = generateGraphiteTargets(targets)
+  "#{graphite_url}/render?from=-#{period}minutes&#{data_targets}#{annotator_target}&format=json&jsonp=?"
 
 # builds a graph object
 createGraph = (anchor, metric) ->
@@ -131,7 +149,7 @@ createGraph = (anchor, metric) ->
     graph_provider = Rickshaw.Graph.JSONP.Graphite
   graph = new graph_provider
     anchor: anchor
-    target: metric.target
+    targets: metric.target || metric.targets
     summary: metric.summary
     scheme: metric.scheme || dashboard.scheme || scheme || 'classic9'
     annotator_target: metric.annotator?.target || metric.annotator
@@ -143,7 +161,7 @@ createGraph = (anchor, metric) ->
     interpolation: metric.interpolation || 'step-before'
     unstack: metric.unstack
     stroke: if metric.stroke is false then false else true
-    dataURL: generateDataURL(metric.target)
+    dataURL: generateDataURL(metric.target || metric.targets)
     onRefresh: (transport) ->
       refreshSummary(transport)
     onComplete: (transport) ->
@@ -241,8 +259,13 @@ Rickshaw.Graph.JSONP.Graphite = Rickshaw.Class.create(Rickshaw.Graph.JSONP,
 
     palette = new Rickshaw.Color.Palette
       scheme: @args.scheme
+    targets = @args.target || @args.targets
     d = _.map d, (el) ->
-      {"color": palette.color(), "name": el.target, "data": rev_xy(el.datapoints)}
+      if typeof targets in ["string", "function"]
+        color = palette.color()
+      else
+        color = getTargetColor(targets, el.target) || palette.color()
+      return {"color": color, "name": el.target, "data": rev_xy(el.datapoints)}
     Rickshaw.Series.zeroFill(d)
     return d
 
@@ -264,7 +287,7 @@ Rickshaw.Graph.JSONP.Graphite = Rickshaw.Class.create(Rickshaw.Graph.JSONP,
     @period = period
     deferred = $.ajax
       dataType: 'json'
-      url: generateDataURL(@args.target, @args.annotator_target)
+      url: generateDataURL(@args.targets, @args.annotator_target)
       error: @error.bind(@)
 )
 
@@ -354,6 +377,7 @@ changeDashboard = (dash_name) ->
 
 # time panel - changing timeframe for graphs
 $('.timepanel').on 'click', 'a.range', ->
+  if graphite_url == 'demo' then changeDashboard(dashboard.name)
   period = $(this).attr('data-timeframe') || default_period
   dataPoll()
   timeFrame = $(this).attr('href').replace(/^#/, '')
