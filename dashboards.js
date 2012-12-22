@@ -24,7 +24,8 @@ var dashboards =
       },
       {
         "alias": "signup breakdown",
-        "target": "sumSeries(enter.your.graphite.metrics.here)", 
+        "targets": ["sumSeries(enter.your.graphite.metrics.here)",  // targets array is also supported
+                    "sumSeries(enter.another.graphite.metrics)"],   // see below for more advanced usage
         "description": "signup breakdown based on site location",
         "renderer": "area",  // use any rickshaw-supported renderer
         "unstack": true  // other parameters like unstack, interpolation, stroke are also available (see rickshaw documentation for more info)
@@ -86,7 +87,12 @@ var dashboards =
       },
       {
         "alias": "proc mem prod",
-        "target": "aliasByNode(derivative(servers.system.cpu.*),4)",
+        "targets": ["aliasByNode(derivative(servers.system.cpu.user),4)",  // targets array can include strings, 
+                                                                           // functions or dictionaries
+                   {target: 'alias(derivative(servers.system.cpu.system,"system utilization")',
+                    alias: 'system utilization',                           // if you use a graphite alias, specify it here
+                    color: '#f00'}],                                       // you can also specify a target color this way
+                                                                           // (note that these values are ignored on the demo)
         // annotator can also be a dictionary of target and description.
         // However, only one annotator is supported per-metric.
         "annotator": {'target' : 'events.deployment',
