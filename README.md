@@ -77,18 +77,47 @@ var dashboards =
       },
       {
         "alias": "Registration breakdown",
-        "target": "sumSeries(enter.your.graphite.metrics.here)", 
         // target can use a javascript function. This allows using dynamic parameters (e.g. period). See a few functions
         // at the bottom of the dashboards.js file.
         "target": function() { return 'summarize(events.registration.success,"' + entire_period() + 'min)' },
         "renderer": "bar",
         "description": "Registrations based on channel",
       },
+      {
+        "alias": "Logins",
+        "targets": ['alias(events.login.success,"success login")',  // targets array is also supported
+                    'alias(events.login.fail,"login failure")'],   // as well as specifying colors
+                                                                   // see below and in dashboards.js for more advanced options 
+        "renderer": "bar",
+        "description": "Logins to the website",
+      },
     ]
   },
   ...
 
 ```
+
+#### target(s)
+
+One of the key parameters for each metric is its `target`, corresponding to the [graphite
+target](http://graphite.readthedocs.org/en/latest/render_api.html#target). 
+
+a metric target(s) can have one of the following:
+
+  * a `string` - describing a graphite target
+  * a `function` - returning a string with a graphite target
+  * an array of one of the following elements:
+    * `string`
+    * `function`
+    * dictionary in the form
+        ```javascript
+
+           {
+            target: 'target',          // usually a target will include the [alias](http://graphite.readthedocs.org/en/0.9.10/functions.html#graphite.render.functions.alias) function
+            alias:  'graphite_alias',  // only if an alias is specified in the target, add an alias field corresponding to the graphite alias
+            color:  '#f00'             // an RGB color value can be specified for this target
+           }
+        ```
 
 ###More configuration options
 
