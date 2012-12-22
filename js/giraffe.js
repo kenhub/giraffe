@@ -296,7 +296,8 @@ Rickshaw.Graph.JSONP.Graphite = Rickshaw.Class.create(Rickshaw.Graph.JSONP, {
         return;
       }
       result_data = _.filter(result, function(el) {
-        return el.target !== _this.args.annotator_target;
+        var _ref;
+        return el.target !== ((_ref = _this.args.annotator_target) != null ? _ref.replace(/["']/g, '') : void 0);
       });
       result_data = _this.preProcess(result_data);
       if (!_this.graph) {
@@ -305,7 +306,7 @@ Rickshaw.Graph.JSONP.Graphite = Rickshaw.Class.create(Rickshaw.Graph.JSONP, {
       series = _this.parseGraphiteData(result_data);
       if (_this.args.annotator_target) {
         annotations = _this.parseGraphiteData(_.filter(result, function(el) {
-          return el.target === _this.args.annotator_target;
+          return el.target === _this.args.annotator_target.replace(/["']/g, '');
         }));
       }
       for (i = _i = 0, _len = series.length; _i < _len; i = ++_i) {

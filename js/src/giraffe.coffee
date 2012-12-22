@@ -206,14 +206,14 @@ Rickshaw.Graph.JSONP.Graphite = Rickshaw.Class.create(Rickshaw.Graph.JSONP,
     deferred.done (result) =>
       return if result.length <= 0
       result_data = _.filter(result, (el) =>
-        el.target != @args.annotator_target)
+        el.target != @args.annotator_target?.replace(/["']/g, ''))
       result_data = @preProcess(result_data)
       # success is called once to build the initial graph
       @success(@parseGraphiteData(result_data)) if not @graph
 
       series = @parseGraphiteData(result_data)
       annotations = @parseGraphiteData(_.filter(result, (el) =>
-        el.target == @args.annotator_target)) if @args.annotator_target
+        el.target == @args.annotator_target.replace(/["']/g, ''))) if @args.annotator_target
       for el, i in series
         @graph.series[i].data = el.data
         @addTotals(i)
