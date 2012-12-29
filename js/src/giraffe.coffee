@@ -122,6 +122,13 @@ getTargetColor = (targets, target) ->
     if t.target == target or t.alias == target
       return t.color
 
+# # takes a target and adds timeShift of shift minutes around it
+# # target must be string or it's returned as-is
+# timeShift = (target, shift=0) ->
+#     return target if typeof target is not "string"
+#     # 
+
+
 generateGraphiteTargets = (targets) ->
   # checking if single target (string) or a function
   if typeof targets is "string" then return "&target=#{targets}"
