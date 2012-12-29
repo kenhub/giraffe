@@ -384,7 +384,7 @@ Rickshaw.Graph.JSONP.Graphite = Rickshaw.Class.create(Rickshaw.Graph.JSONP, {
       return;
     }
     annotation_timestamps = _((_ref = annotations[0]) != null ? _ref.data : void 0).filter(function(el) {
-      return el.y !== 0;
+      return el.y !== 0 && el.y !== null;
     });
     this.annotator.data = {};
     $(this.annotator.elements.timeline).empty();

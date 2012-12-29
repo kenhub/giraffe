@@ -271,7 +271,7 @@ Rickshaw.Graph.JSONP.Graphite = Rickshaw.Class.create(Rickshaw.Graph.JSONP,
 
   addAnnotations: (annotations, description) ->
     return unless annotations
-    annotation_timestamps = _(annotations[0]?.data).filter (el) -> el.y != 0
+    annotation_timestamps = _(annotations[0]?.data).filter (el) -> el.y != 0 and el.y != null
     @annotator.data = {}
     $(@annotator.elements.timeline).empty()
     active_annotation = $(@annotator.elements.timeline)
