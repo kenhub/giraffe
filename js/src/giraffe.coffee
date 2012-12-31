@@ -2,7 +2,24 @@
 default_period = 1440
 scheme = 'classic9' if scheme is undefined
 period = default_period
-dashboard = dashboards[0]
+
+dashboard_data = []
+
+loadDashboardData = ->
+  if dashboards is undefined
+    for dashgroup in dashboard_groups
+      $.ajax({
+        "async": false,
+        "dataType": "script",
+        "url": "dashboards/" + dashgroup + ".js"
+      })
+    return
+  dashboard_data = [{ "name": "Dashboards", "dashboards": dashboards }]
+  return
+
+loadDashboardData()
+dashboard_group = dashboard_data[0]
+dashboard = dashboard_group['dashboards'][0]
 metrics = dashboard['metrics']
 description = dashboard['description']
 refresh = dashboard['refresh']
@@ -100,10 +117,22 @@ graphScaffold = ->
   $('#graphs').append Mustache.render(graph_template, context)
 
 init = ->
-  $('.dropdown-menu').empty()
-  for dash in dashboards
-    $('.dropdown-menu').append("<li><a href=\"#\">#{dash.name}</a></li>")
+  dropdown_menu_template = """
+    <li class="dropdown">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{dashgroup_name}} <b class="caret"></b></a>
+      <ul class="dropdown-menu dropdown-menu-{{dashgroup_id}}"></ul>
+    </li>"""
 
+  dropdown_menu_item_template = """
+    <li><a href="#">{{dash_name}}</a></li>"""
+
+  $('.nav').empty()
+  for dashgroup, i in dashboard_data
+    $('.nav').append Mustache.render(dropdown_menu_template, {dashgroup_id: i, dashgroup_name: dashgroup.name})
+    for dash in dashgroup.dashboards
+      $('.dropdown-menu-' + i).append Mustache.render(dropdown_menu_item_template, {dash_name: dash.name})
+  
+  setupDropdownMenuLinks()
   graphScaffold()
 
   graphs = []
@@ -134,16 +163,19 @@ generateGraphiteTargets = (targets) ->
     graphite_targets += "&target=#{target?.target || ''}" if typeof target is "object"
   return graphite_targets
 
+graphiteURL = ->
+  dashboard_group.graphite_url || graphite_url
+
 # generate a URL to retrieve data from graphite
 generateDataURL= (targets, annotator_target) ->
   annotator_target = if annotator_target then "&target=#{annotator_target}" else ""
   data_targets = generateGraphiteTargets(targets)
-  "#{graphite_url}/render?from=-#{period}minutes&#{data_targets}#{annotator_target}&format=json&jsonp=?"
+  "#{graphiteURL()}/render?from=-#{period}minutes&#{data_targets}#{annotator_target}&format=json&jsonp=?"
 
 # builds a graph object
 createGraph = (anchor, metric) ->
  
-  if graphite_url == 'demo'
+  if graphiteURL() == 'demo'
     graph_provider = Rickshaw.Graph.Demo
   else
     graph_provider = Rickshaw.Graph.JSONP.Graphite
@@ -151,7 +183,7 @@ createGraph = (anchor, metric) ->
     anchor: anchor
     targets: metric.target || metric.targets
     summary: metric.summary
-    scheme: metric.scheme || dashboard.scheme || scheme || 'classic9'
+    scheme: metric.scheme || dashboard.scheme || dashboard_group.scheme || scheme || 'classic9'
     annotator_target: metric.annotator?.target || metric.annotator
     annotator_description: metric.annotator?.description || 'deployment'
     element: $("#{anchor} .chart")[0]
@@ -360,29 +392,34 @@ Rickshaw.Graph.Demo = Rickshaw.Class.create(Rickshaw.Graph.JSONP.Graphite,
 #   Events and interaction
 ###
 # dashboard selection
-$('.dropdown-menu').on 'click', 'a', ->
-  changeDashboard($(this).text())
-  $('.dropdown').removeClass('open')
-  false
+setupDropdownMenuLinks = ->
+  $('.dropdown-menu').on 'click', 'a', ->
+    dashgroup_name = $.trim($(this).parents('.dropdown').children('.dropdown-toggle').text());
+    dash_name = $(this).text();
+    changeDashboard(dashgroup_name,dash_name);
+    $('.dropdown').removeClass('open')
+    false
+  return
 
 # changing to a different dashboard
-changeDashboard = (dash_name) ->
-  dashboard = _.where(dashboards, {name: dash_name})[0] || dashboards[0]
+changeDashboard = (dashgroup_name,dash_name) ->
+  dashboard_group = _.where(dashboard_data, {name: dashgroup_name})[0] || dashboard_data[0]
+  dashboard = _.where(dashboard_group['dashboards'], {name: dash_name})[0] || dashboard_group['dashboards'][0]
   description = dashboard['description']
   metrics = dashboard['metrics']
   refresh = dashboard['refresh']
   period = default_period 
   init()
-  $.bbq.pushState({dashboard: dashboard.name})
+  $.bbq.pushState({dashboard_group: dashboard_group.name, dashboard: dashboard.name})
 
 # time panel - changing timeframe for graphs
 $('.timepanel').on 'click', 'a.range', ->
-  if graphite_url == 'demo' then changeDashboard(dashboard.name)
+  if graphiteURL() == 'demo' then changeDashboard(dashboard_group.name,dashboard.name)
   period = $(this).attr('data-timeframe') || default_period
   dataPoll()
   timeFrame = $(this).attr('href').replace(/^#/, '')
   dash = $.bbq.getState()?.dashboard
-  $.bbq.pushState({timeFrame: timeFrame, dashboard: dash || dashboard.name})
+  $.bbq.pushState({timeFrame: timeFrame, dashboard_group: dashboard_group.name, dashboard: dash || dashboard.name})
   $(this).parent('.btn-group').find('a').removeClass('active')
   $(this).addClass('active')
   false
@@ -426,7 +463,7 @@ $(window).bind 'hashchange', (e) ->
   timeFrame = e.getState()?.timeFrame || $(".timepanel a.range[data-timeframe='#{default_period}']")[0].text || "1d"
   dash = e.getState()?.dashboard
   if dash != dashboard.name
-    changeDashboard(dash)
+    changeDashboard(dashboard_group.name,dash)
   $('.timepanel a.range[href="#' + timeFrame + '"]').click()
 
 $ ->
