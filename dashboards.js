@@ -104,7 +104,9 @@ var dashboards =
       {
         "alias": "sys mem prod",
         "target": "aliasByNode(derivative(servers.system.cpu.*),4)",
-        "annotator": 'stats.gluteus-medius.events.deployment',
+        "events": "*",  // instead of annotator, if you use the graphite events feature
+                        // you can retrieve events matching specific tag(s) -- space separated
+                        // or use * for all tags. Note you cannot use both annotator and events.
         "description": "main system memory usage on production (cardinal interpolation, line renderer)",
         "interpolation": "cardinal",
         "renderer": "line",
