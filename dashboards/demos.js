@@ -1,22 +1,13 @@
-/*
-  Global Graphite URL, e.g. http://graphite.example.com
-  If using externally included JavaScript files, can be overriden with graphite_url declaration
-*/
-var graphite_url = "demo";
+// Example Demo dashboards in externally included JavaScript file
+// To enable: set dashboard_groups to include "demos"
 
-/*
- To enable externally included JavaScript files in dashboards folder:
-  * Comment dashboards variable below
-  * Uncomment dashboard_groups variable below with each file to be loaded: dashboards/NAME.js
-*/
-/*
-var dashboard_groups =
-[
-  "demos"
-];
-*/
-
-var dashboards = 
+// Required starting line for externally included files
+dashboard_data.push({
+  "name": "demos",
+  // optionally specify Graphite URL (e.g. http://graphite.example.com) per file
+  // or leave global value in dashboards.js and skip this
+  "graphite_url": "demo",
+  "dashboards":
 [
   { "name": "Demo",  // give your dashboard a name (required!)
     "refresh": 5000,  // each dashboard has its own refresh interval (in ms)
@@ -162,28 +153,19 @@ var dashboards =
       },
     ]
   },
-];
+],
+// optionally specify color scheme for this file
+// or leave global value in dashboards.js and skip this
+"scheme": [
+  '#423d4f',
+  '#4a6860',
+  '#848f39',
+  '#a2b73c',
+  '#ddcb53',
+  '#c5a32f',
+  '#7d5836',
+  '#963b20',
+  '#7c2626',
+].reverse()
+});
 
-/*
-  Globally defined color scheme
-  If using externally included JavaScript files, can be overriden with scheme declaration
-*/
-var scheme = [
-              '#423d4f',
-              '#4a6860',
-              '#848f39',
-              '#a2b73c',
-              '#ddcb53',
-              '#c5a32f',
-              '#7d5836',
-              '#963b20',
-              '#7c2626',
-              ].reverse();
-
-/*
-  Globally defined custom functions
-  If using externally included JavaScript files, they can also be defined in them
-*/
-function relative_period() { return (typeof period == 'undefined') ? 1 : parseInt(period / 7) + 1; }
-function entire_period() { return (typeof period == 'undefined') ? 1 : period; }
-function at_least_a_day() { return entire_period() >= 1440 ? entire_period() : 1440; }
