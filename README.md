@@ -32,7 +32,7 @@ Because we wanted to create a dashboard that has all the benefits and none of th
 
 * **No server required** - Giraffe can be installed on any server, or even run from a folder. Just copy the files and you're done.
 * **Beautiful, real-time visualization** - using Rickshaw to create visually appealing, interactive charts.
-* **Flexible** - supports many dashboards, different metrics, annotations, colour schemes, time intervals, summary options, CSS and more.
+* **Flexible** - supports many dashboards, different metrics, annotations / events, colour schemes, time intervals, summary options, CSS and more.
 * **Easy to use** - configuration is done from [one (javascript) file](https://github.com/kenhub/giraffe/blob/master/dashboards.js) with a reasonbly clear and documented options. You
   don't even need to know javascript to configure it. Be aware that it's not very tolerant to typos or missing commas.
 
@@ -118,6 +118,29 @@ a metric target(s) can have one of the following:
             color:  '#f00'             // an RGB color value can be specified for this target
            }
         ```
+#### annotations and events
+
+Giraffe supports [annotations](http://code.shutterstock.com/rickshaw/#annotations) from two potential data sources:
+
+  * standard graphite targets - use `annotator` to specify your target to collect events from. Each value
+    different from None or zero will be annotated. You can optionally specify a description for all annotations.
+    The default value is `deployment`
+  * graphite [events](https://code.launchpad.net/~lucio.torre/graphite/add-events/+merge/69142) - use `events` to specify the tags you want to include as annotations, or `*` for all tags. tags are space separated. Using `events` has the benefit of including the event `what` and `data` for each annotation (as opposed to one value for all annotations) 
+
+##### Notes:
+
+* even though you can use an annotator with a target of `events('*')` it will be very slow on bigger time frames.
+  `"events": "*"` will be far more efficient.
+* do not mix `annotator` and `events` within the same metric.
+* The graphite events handler [does not currently support jsonp](https://github.com/graphite-project/graphite-web/pull/128).
+Until it does, you can do one of the following:
+  * +1 it on the graphite issue tracker so it gets included :)
+  * install giraffe on the same server as your graphite to avoid cross-domain issues.
+  * configure [CORS](http://www.w3.org/wiki/CORS_Enabled#At_the_HTTP_Server_level...) on your graphite web server.
+  * install the kenhub graphite branch `pip install git+git://github.com/kenhub/graphite-web.git@0.9.x`which adds jsonp
+    support. At least until graphite supports it.
+
+thanks to @mattpascoe for his suggestion and help testing this.
 
 ###More configuration options
 

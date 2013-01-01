@@ -140,6 +140,12 @@ generateDataURL= (targets, annotator_target) ->
   data_targets = generateGraphiteTargets(targets)
   "#{graphite_url}/render?from=-#{period}minutes&#{data_targets}#{annotator_target}&format=json&jsonp=?"
 
+# generate a URL to retrieve events from graphite
+generateEventsURL= (event_tags) ->
+  tags = if event_tags is '*' then '' else "&tags=#{event_tags}"
+  jsonp = if window.json_fallback then '' else "&jsonp=?"
+  "#{graphite_url}/events/get_data?from=-#{period}minutes#{tags}#{jsonp}"
+
 # builds a graph object
 createGraph = (anchor, metric) ->
  
@@ -154,6 +160,7 @@ createGraph = (anchor, metric) ->
     scheme: metric.scheme || dashboard.scheme || scheme || 'classic9'
     annotator_target: metric.annotator?.target || metric.annotator
     annotator_description: metric.annotator?.description || 'deployment'
+    events: metric.events
     element: $("#{anchor} .chart")[0]
     width: $("#{anchor} .chart").width()
     height: 300
@@ -190,8 +197,8 @@ createGraph = (anchor, metric) ->
       shelving = new Rickshaw.Graph.Behavior.Series.Toggle
         graph: graph
         legend: @legend
-      if metric.annotator
-        @annotator = new Rickshaw.Graph.Annotate
+      if metric.annotator or metric.events
+        @annotator = new GiraffeAnnotate
           graph: graph
           element: $("#{anchor} .timeline")[0]
       refreshSummary(@)
@@ -202,23 +209,29 @@ Rickshaw.Graph.JSONP.Graphite = Rickshaw.Class.create(Rickshaw.Graph.JSONP,
     @refreshGraph(period)
 
   refreshGraph: (period) ->
+
     deferred = @getAjaxData(period)
     deferred.done (result) =>
       return if result.length <= 0
       result_data = _.filter(result, (el) =>
-        el.target != @args.annotator_target)
+        el.target != @args.annotator_target?.replace(/["']/g, ''))
       result_data = @preProcess(result_data)
       # success is called once to build the initial graph
       @success(@parseGraphiteData(result_data)) if not @graph
 
       series = @parseGraphiteData(result_data)
       annotations = @parseGraphiteData(_.filter(result, (el) =>
-        el.target == @args.annotator_target)) if @args.annotator_target
+        el.target == @args.annotator_target.replace(/["']/g, ''))) if @args.annotator_target
       for el, i in series
         @graph.series[i].data = el.data
         @addTotals(i)
       @graph.renderer.unstack = @args.unstack
       @graph.render()
+      # adding event annotations if events are specified
+      if @args.events
+        deferred = @getEvents(period)
+        deferred.done (result) =>
+          @addEventAnnotations(result)
       @addAnnotations(annotations, @args.annotator_description)
       @args.onRefresh(@)
 
@@ -269,19 +282,40 @@ Rickshaw.Graph.JSONP.Graphite = Rickshaw.Class.create(Rickshaw.Graph.JSONP,
     Rickshaw.Series.zeroFill(d)
     return d
 
-  addAnnotations: (annotations, description) ->
-    return unless annotations
-    annotation_timestamps = _(annotations[0]?.data).filter (el) -> el.y != 0
+  addEventAnnotations: (events_json) ->
+    return unless events_json
+    @annotator ||= new GiraffeAnnotate
+      graph: @graph
+      element: $("#{@args.anchor} .timeline")[0]
+      
     @annotator.data = {}
     $(@annotator.elements.timeline).empty()
     active_annotation = $(@annotator.elements.timeline)
                         .parent().find('.annotation_line.active').size() > 0
     $(@annotator.elements.timeline).parent()?.find('.annotation_line').remove()
-    for annotation in annotation_timestamps
-      @annotator.add(annotation.x, description)
+    for event in events_json
+      @annotator.add(event.when, "#{event.what} #{event.data or ''}")
     @annotator.update()
     if active_annotation
       $(@annotator.elements.timeline).parent()?.find('.annotation_line').addClass('active')
+
+  addAnnotations: (annotations, description) ->
+    return unless annotations
+    annotation_timestamps = _(annotations[0]?.data).filter (el) -> el.y != 0 and el.y != null
+    @addEventAnnotations _.map(annotation_timestamps, (a) -> {when: a.x, what: description})
+
+  getEvents: (period) ->
+    @period = period
+    deferred = $.ajax
+      dataType: 'json'
+      url: generateEventsURL(@args.events)
+      error: (xhr, textStatus, errorThrown) =>
+        # trying to fallback to json if jsonp wasn't available
+        if textStatus is 'parsererror' and /was not called/.test(errorThrown.message)
+          window.json_fallback = true
+          @refreshGraph(period)
+        else
+          console.log("error loading eventsURL: " + generateEventsURL(@args.events))
 
   getAjaxData: (period) ->
     @period = period
