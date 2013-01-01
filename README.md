@@ -106,7 +106,7 @@ a metric target(s) can have one of the following:
 
   * a `string` - describing a graphite target
   * a `function` - returning a string with a graphite target
-  * an array of one of the following elements:
+  * an array of targets in one of the following formats:
     * `string`
     * `function`
     * dictionary in the form
@@ -118,6 +118,7 @@ a metric target(s) can have one of the following:
             color:  '#f00'             // an RGB color value can be specified for this target
            }
         ```
+        
 #### annotations and events
 
 Giraffe supports [annotations](http://code.shutterstock.com/rickshaw/#annotations) from two potential data sources:
