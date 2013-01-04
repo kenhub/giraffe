@@ -163,7 +163,8 @@ createGraph = (anchor, metric) ->
     events: metric.events
     element: $("#{anchor} .chart")[0]
     width: $("#{anchor} .chart").width()
-    height: 300
+    height: metric.height || 300
+    min: metric.min || 0
     renderer: metric.renderer || 'area'
     interpolation: metric.interpolation || 'step-before'
     unstack: metric.unstack
@@ -338,6 +339,7 @@ Rickshaw.Graph.Demo = Rickshaw.Class.create(Rickshaw.Graph.JSONP.Graphite,
       element: @args.element
       width: @args.width
       height: @args.height
+      min: @args.min
       renderer: @args.renderer
       interpolation: @args.interpolation
       stroke: @args.stroke
