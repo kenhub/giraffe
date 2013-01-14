@@ -242,6 +242,7 @@ createGraph = function(anchor, metric) {
     width: $("" + anchor + " .chart").width(),
     height: metric.height || 300,
     min: metric.min || 0,
+    max: metric.max,
     renderer: metric.renderer || 'area',
     interpolation: metric.interpolation || 'step-before',
     unstack: metric.unstack,
@@ -360,6 +361,9 @@ Rickshaw.Graph.JSONP.Graphite = Rickshaw.Class.create(Rickshaw.Graph.JSONP, {
           item.datapoints.push([item.datapoints[0][0], 1]);
         }
       }
+      if (item.datapoints.length > 1 && !item.datapoints[item.datapoints.length - 1][0]) {
+        item.datapoints[item.datapoints.length - 1][0] = item.datapoints[item.datapoints.length - 2][0];
+      }
     }
     return result;
   },
@@ -476,6 +480,7 @@ Rickshaw.Graph.Demo = Rickshaw.Class.create(Rickshaw.Graph.JSONP.Graphite, {
       width: this.args.width,
       height: this.args.height,
       min: this.args.min,
+      max: this.args.max,
       renderer: this.args.renderer,
       interpolation: this.args.interpolation,
       stroke: this.args.stroke,
@@ -554,7 +559,6 @@ changeDashboard = function(dash_name) {
   description = dashboard['description'];
   metrics = dashboard['metrics'];
   refresh = dashboard['refresh'];
-  period = default_period;
   init();
   return $.bbq.pushState({
     dashboard: dashboard.name
