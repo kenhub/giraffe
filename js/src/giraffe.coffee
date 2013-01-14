@@ -261,6 +261,10 @@ Rickshaw.Graph.JSONP.Graphite = Rickshaw.Class.create(Rickshaw.Graph.JSONP,
           item.datapoints.push [0, 1]
         else
           item.datapoints.push [item.datapoints[0][0], 1]
+      # when the last datapoint is null, we change it to repeat the
+      # last value to prevent the graph from going to zero at the end
+      if item.datapoints.length > 1 && not item.datapoints[item.datapoints.length - 1][0]
+        item.datapoints[item.datapoints.length - 1][0] = item.datapoints[item.datapoints.length - 2][0]
     result
 
   # parses graphite data and produces a
