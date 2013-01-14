@@ -28,7 +28,7 @@ var dashboards =
                     "sumSeries(enter.another.graphite.metrics)"],   // see below for more advanced usage
         "description": "signup breakdown based on site location",
         "renderer": "area",  // use any rickshaw-supported renderer
-        "unstack": true  // other parameters like unstack, interpolation, stroke, min, height are also available (see rickshaw documentation for more info)
+        "unstack": true  // other parameters like unstack, interpolation, stroke, min, max, height are also available (see rickshaw documentation for more info)
       },
       {
         "alias": "Registration breakdown",
