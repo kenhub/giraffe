@@ -74,7 +74,7 @@ graphScaffold = ->
                     {{#start_row}}
                     <div class="row-fluid">
                     {{/start_row}}
-                      <div class="span4" id="graph-{{graph_id}}">
+                      <div class="{{span}}" id="graph-{{graph_id}}">
                         <h2>{{metric_alias}} <span class="pull-right graph-summary"><span></h2>
                         <div class="chart"></div>
                         <div class="timeline"></div>
@@ -90,13 +90,17 @@ graphScaffold = ->
   context = {metrics: []}
   converter = new Markdown.Converter()
   context['dashboard_description'] = converter.makeHtml(description) if description
+  offset = 0
   for metric, i in metrics
+    colspan = if metric.colspan? then metric.colspan else 1
     context['metrics'].push
-      start_row: i % 3 is 0
-      end_row: i % 3 is 2
-      graph_id: i  
+      start_row: offset % 3 is 0
+      end_row: offset % 3 is 2
+      graph_id: i
+      span: 'span' + (4 * colspan)
       metric_alias: metric.alias
       metric_description: metric.description
+    offset += colspan
   $('#graphs').append Mustache.render(graph_template, context)
 
 init = ->
