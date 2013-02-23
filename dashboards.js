@@ -55,6 +55,8 @@ var dashboards =
                 +"\n"
                 +"\nThis includes: [color scheme](https://github.com/shutterstock/rickshaw#rickshawcolorpalette), interpolation, [renderer](https://github.com/shutterstock/rickshaw#renderer) and more."
                 +"\n"
+                +"\nEach graph can span over 1,2 or 3 columns using the `colspan` metric parameter."
+                +"\n"
                 +"\n##Top panel"
                 +"\n"
                 +"\nThe top panel allows toggling between time ranges (not visible on the demo, but should work fine with graphite)."
@@ -76,6 +78,16 @@ var dashboards =
                 ,
     "metrics": 
     [
+      {
+        "alias": "network",
+        "target": "aliasByNode(derivative(servers.system.eth*),4)",
+        "events": "*",  // instead of annotator, if you use the graphite events feature
+                        // you can retrieve events matching specific tag(s) -- space separated
+                        // or use * for all tags. Note you cannot use both annotator and events.
+        "description": "main system cpu usage on production (cardinal interpolation, line renderer, colspan=3)",
+        "interpolation": "linear",
+        "colspan": 3,
+      },
       {
         "alias": "cpu utilization",
         "target": "aliasByNode(derivative(servers.system.cpu.*),4)",  // target can use any graphite-supported wildcards

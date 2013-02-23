@@ -74,6 +74,7 @@ var dashboards =
         "description": "signup breakdown based on site location",
         "renderer": "area",  // use any rickshaw-supported renderer
         "unstack": true  // other parameters like unstack, interpolation, stroke are also available (see rickshaw documentation for more info)
+        "colspan": 3  // the graph can span across 1,2 or 3 columns
       },
       {
         "alias": "Registration breakdown",
