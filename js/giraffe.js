@@ -385,7 +385,7 @@ Rickshaw.Graph.JSONP.Graphite = Rickshaw.Class.create(Rickshaw.Graph.JSONP, {
       return _.map(datapoints, function(point) {
         return {
           'x': point[1],
-          'y': point[0] || 0
+          'y': point[0]
         };
       });
     };

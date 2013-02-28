@@ -282,7 +282,7 @@ Rickshaw.Graph.JSONP.Graphite = Rickshaw.Class.create(Rickshaw.Graph.JSONP,
 
     rev_xy = (datapoints) ->
       _.map datapoints, (point) ->
-        {'x': point[1], 'y': point[0] || 0}
+        {'x': point[1], 'y': point[0]}
 
     palette = new Rickshaw.Color.Palette
       scheme: @args.scheme
