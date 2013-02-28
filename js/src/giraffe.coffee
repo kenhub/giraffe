@@ -37,6 +37,12 @@ _min = (series) ->
     return memo)
     ,null)
 
+_last = (series) ->
+  _.reduce(series, ((memo, val) ->
+    return val if val
+    return memo)
+    ,null)
+
 _formatBase1024KMGTP = (y, formatter = d3.format(".2r")) ->
   abs_y = Math.abs(y)
   if abs_y >= 1125899906842624   then return formatter(y / 1125899906842624) + "P"
@@ -56,7 +62,7 @@ refreshSummary = (graph) ->
   summary_func = _avg if graph.args.summary is "avg"
   summary_func = _min if graph.args.summary is "min"
   summary_func = _max if graph.args.summary is "max"
-  summary_func = _.last if graph.args.summary is "last"
+  summary_func = _last if graph.args.summary is "last"
   summary_func = graph.args.summary if typeof graph.args.summary is "function"
   console.log("unknown summary function #{graph.args.summary}") unless summary_func
   y_data = _.map(_.flatten(_.pluck(graph.graph.series, 'data')), (d) -> d.y)
