@@ -21,6 +21,7 @@ var dashboards =
         "target": "sumSeries(enter.your.graphite.metrics.here)",  // enter your graphite barebone target expression here
         "description": "New signups to the website",  // enter your metric description here
         "summary": "sum",  // available options: [sum|min|max|avg|last|<function>]
+        "summary_formatter": d3.format(",f") // see d3 formatting docs for more options
       },
       {
         "alias": "signup breakdown",
@@ -38,6 +39,7 @@ var dashboards =
         "target": function() { return 'summarize(events.registration.success,"' + entire_period() + 'min)' },
         "renderer": "bar",
         "description": "Registrations based on channel",
+        "hover_formatter": d3.format("03.6g")
       },
     ]
   },

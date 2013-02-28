@@ -130,7 +130,7 @@ refreshSummary = function(graph) {
   y_data = _.map(_.flatten(_.pluck(graph.graph.series, 'data')), function(d) {
     return d.y;
   });
-  return $("" + graph.args.anchor + " .graph-summary").html(_formatBase1024KMGTP(summary_func(y_data)));
+  return $("" + graph.args.anchor + " .graph-summary").html(graph.args.summary_formatter(summary_func(y_data)));
 };
 
 graphScaffold = function() {
@@ -247,6 +247,7 @@ createGraph = function(anchor, metric) {
     anchor: anchor,
     targets: metric.target || metric.targets,
     summary: metric.summary,
+    summary_formatter: metric.summary_formatter || _formatBase1024KMGTP,
     scheme: metric.scheme || dashboard.scheme || scheme || 'classic9',
     annotator_target: ((_ref = metric.annotator) != null ? _ref.target : void 0) || metric.annotator,
     annotator_description: ((_ref1 = metric.annotator) != null ? _ref1.description : void 0) || 'deployment',
@@ -264,7 +265,7 @@ createGraph = function(anchor, metric) {
       return refreshSummary(transport);
     },
     onComplete: function(transport) {
-      var detail, shelving, xAxis, yAxis;
+      var detail, hover_formatter, shelving, xAxis, yAxis;
       graph = transport.graph;
       xAxis = new Rickshaw.Graph.Axis.Time({
         graph: graph
@@ -278,10 +279,11 @@ createGraph = function(anchor, metric) {
         ticksTreatment: 'glow'
       });
       yAxis.render();
+      hover_formatter = metric.hover_formatter || _formatBase1024KMGTP;
       detail = new Rickshaw.Graph.HoverDetail({
         graph: graph,
         yFormatter: function(y) {
-          return _formatBase1024KMGTP(y);
+          return hover_formatter(y);
         }
       });
       $("" + anchor + " .legend").empty();

@@ -66,7 +66,7 @@ refreshSummary = (graph) ->
   summary_func = graph.args.summary if typeof graph.args.summary is "function"
   console.log("unknown summary function #{graph.args.summary}") unless summary_func
   y_data = _.map(_.flatten(_.pluck(graph.graph.series, 'data')), (d) -> d.y)
-  $("#{graph.args.anchor} .graph-summary").html(_formatBase1024KMGTP(summary_func(y_data)))
+  $("#{graph.args.anchor} .graph-summary").html(graph.args.summary_formatter(summary_func(y_data)))
   
 
 # builds the HTML scaffolding for the graphs
@@ -167,6 +167,7 @@ createGraph = (anchor, metric) ->
     anchor: anchor
     targets: metric.target || metric.targets
     summary: metric.summary
+    summary_formatter: metric.summary_formatter || _formatBase1024KMGTP
     scheme: metric.scheme || dashboard.scheme || scheme || 'classic9'
     annotator_target: metric.annotator?.target || metric.annotator
     annotator_description: metric.annotator?.description || 'deployment'
@@ -196,9 +197,10 @@ createGraph = (anchor, metric) ->
         ticksTreatment: 'glow'
       yAxis.render()
         # element: $("#{anchor} .y-axis")[0]
+      hover_formatter = metric.hover_formatter || _formatBase1024KMGTP
       detail = new Rickshaw.Graph.HoverDetail
         graph: graph
-        yFormatter: (y) -> _formatBase1024KMGTP(y)
+        yFormatter: (y) -> hover_formatter(y)
       # a bit of an ugly hack, but some times onComplete
       # seems to be called twice, generating duplicate legend
       $("#{anchor} .legend").empty()
