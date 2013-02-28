@@ -98,6 +98,7 @@ var dashboards =
         "description": "cpu utilization on production (using linear interpolation). Summary displays the average across all series",
         "interpolation": "linear",  // you can use different rickshaw interpolation values
         "summary": "avg",
+        "stroke_width": 1
       },
       {
         "alias": "proc mem prod",

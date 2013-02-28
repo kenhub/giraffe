@@ -260,6 +260,7 @@ createGraph = function(anchor, metric) {
     interpolation: metric.interpolation || 'step-before',
     unstack: metric.unstack,
     stroke: metric.stroke === false ? false : true,
+    strokeWidth: metric.stroke_width,
     dataURL: generateDataURL(metric.target || metric.targets),
     onRefresh: function(transport) {
       return refreshSummary(transport);
@@ -494,6 +495,7 @@ Rickshaw.Graph.Demo = Rickshaw.Class.create(Rickshaw.Graph.JSONP.Graphite, {
       renderer: this.args.renderer,
       interpolation: this.args.interpolation,
       stroke: this.args.stroke,
+      strokeWidth: this.args.strokeWidth,
       series: [
         {
           color: palette.color(),

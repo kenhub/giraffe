@@ -180,6 +180,7 @@ createGraph = (anchor, metric) ->
     interpolation: metric.interpolation || 'step-before'
     unstack: metric.unstack
     stroke: if metric.stroke is false then false else true
+    strokeWidth: metric.stroke_width
     dataURL: generateDataURL(metric.target || metric.targets)
     onRefresh: (transport) ->
       refreshSummary(transport)
@@ -355,6 +356,7 @@ Rickshaw.Graph.Demo = Rickshaw.Class.create(Rickshaw.Graph.JSONP.Graphite,
       renderer: @args.renderer
       interpolation: @args.interpolation
       stroke: @args.stroke
+      strokeWidth: @args.strokeWidth
       series: [
           {
               color: palette.color(),
