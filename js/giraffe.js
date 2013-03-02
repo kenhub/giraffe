@@ -256,6 +256,7 @@ createGraph = function(anchor, metric) {
     width: $("" + anchor + " .chart").width(),
     height: metric.height || 300,
     min: metric.min || 0,
+    null_as: metric.null_as === void 0 ? null : metric.null_as,
     renderer: metric.renderer || 'area',
     interpolation: metric.interpolation || 'step-before',
     unstack: metric.unstack,
@@ -326,13 +327,13 @@ Rickshaw.Graph.JSONP.Graphite = Rickshaw.Class.create(Rickshaw.Graph.JSONP, {
       });
       result_data = _this.preProcess(result_data);
       if (!_this.graph) {
-        _this.success(_this.parseGraphiteData(result_data));
+        _this.success(_this.parseGraphiteData(result_data, _this.args.null_as));
       }
-      series = _this.parseGraphiteData(result_data);
+      series = _this.parseGraphiteData(result_data, _this.args.null_as);
       if (_this.args.annotator_target) {
         annotations = _this.parseGraphiteData(_.filter(result, function(el) {
           return el.target === _this.args.annotator_target.replace(/["']/g, '');
-        }));
+        }), _this.args.null_as);
       }
       for (i = _i = 0, _len = series.length; _i < _len; i = ++_i) {
         el = series[i];
@@ -379,13 +380,16 @@ Rickshaw.Graph.JSONP.Graphite = Rickshaw.Class.create(Rickshaw.Graph.JSONP, {
     }
     return result;
   },
-  parseGraphiteData: function(d) {
+  parseGraphiteData: function(d, null_as) {
     var palette, rev_xy, targets;
+    if (null_as == null) {
+      null_as = null;
+    }
     rev_xy = function(datapoints) {
       return _.map(datapoints, function(point) {
         return {
           'x': point[1],
-          'y': point[0]
+          'y': point[0] || null_as
         };
       });
     };

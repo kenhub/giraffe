@@ -176,6 +176,7 @@ createGraph = (anchor, metric) ->
     width: $("#{anchor} .chart").width()
     height: metric.height || 300
     min: metric.min || 0
+    null_as: if metric.null_as is undefined then null else metric.null_as
     renderer: metric.renderer || 'area'
     interpolation: metric.interpolation || 'step-before'
     unstack: metric.unstack
@@ -231,11 +232,11 @@ Rickshaw.Graph.JSONP.Graphite = Rickshaw.Class.create(Rickshaw.Graph.JSONP,
         el.target != @args.annotator_target?.replace(/["']/g, ''))
       result_data = @preProcess(result_data)
       # success is called once to build the initial graph
-      @success(@parseGraphiteData(result_data)) if not @graph
+      @success(@parseGraphiteData(result_data, @args.null_as)) if not @graph
 
-      series = @parseGraphiteData(result_data)
+      series = @parseGraphiteData(result_data, @args.null_as)
       annotations = @parseGraphiteData(_.filter(result, (el) =>
-        el.target == @args.annotator_target.replace(/["']/g, ''))) if @args.annotator_target
+        el.target == @args.annotator_target.replace(/["']/g, '')), @args.null_as) if @args.annotator_target
       for el, i in series
         @graph.series[i].data = el.data
         @addTotals(i)
@@ -278,11 +279,11 @@ Rickshaw.Graph.JSONP.Graphite = Rickshaw.Class.create(Rickshaw.Graph.JSONP,
 
   # parses graphite data and produces a
   # rickshaw series data structure
-  parseGraphiteData: (d) ->
+  parseGraphiteData: (d, null_as = null) ->
 
     rev_xy = (datapoints) ->
       _.map datapoints, (point) ->
-        {'x': point[1], 'y': point[0]}
+        {'x': point[1], 'y': point[0] || null_as}
 
     palette = new Rickshaw.Color.Palette
       scheme: @args.scheme

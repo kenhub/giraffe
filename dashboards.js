@@ -21,7 +21,7 @@ var dashboards =
         "target": "sumSeries(enter.your.graphite.metrics.here)",  // enter your graphite barebone target expression here
         "description": "New signups to the website",  // enter your metric description here
         "summary": "sum",  // available options: [sum|min|max|avg|last|<function>]
-        "summary_formatter": d3.format(",f") // see d3 formatting docs for more options
+        "summary_formatter": d3.format(",f") // customize your summary format function. see d3 formatting docs for more options
       },
       {
         "alias": "signup breakdown",
@@ -39,7 +39,8 @@ var dashboards =
         "target": function() { return 'summarize(events.registration.success,"' + entire_period() + 'min)' },
         "renderer": "bar",
         "description": "Registrations based on channel",
-        "hover_formatter": d3.format("03.6g")
+        "hover_formatter": d3.format("03.6g"),  // customize your hover format
+        "null_as": 0  // null values are normally ignored, but you can convert null to a specific value (usually zero)
       },
     ]
   },
@@ -97,8 +98,8 @@ var dashboards =
                                            // enter your graphite target as a string
         "description": "cpu utilization on production (using linear interpolation). Summary displays the average across all series",
         "interpolation": "linear",  // you can use different rickshaw interpolation values
+        "stroke_width": 1,  // change stroke width
         "summary": "avg",
-        "stroke_width": 1
       },
       {
         "alias": "proc mem prod",
