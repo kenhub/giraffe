@@ -39,7 +39,7 @@ _min = (series) ->
 
 _last = (series) ->
   _.reduce(series, ((memo, val) ->
-    return val if val
+    return val if val != null
     return memo)
     ,null)
 
@@ -283,7 +283,7 @@ Rickshaw.Graph.JSONP.Graphite = Rickshaw.Class.create(Rickshaw.Graph.JSONP,
 
     rev_xy = (datapoints) ->
       _.map datapoints, (point) ->
-        {'x': point[1], 'y': point[0] || null_as}
+        {'x': point[1], 'y': if point[0] != null then point[0] else null_as}
 
     palette = new Rickshaw.Color.Palette
       scheme: @args.scheme

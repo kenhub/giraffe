@@ -69,7 +69,7 @@ _min = function(series) {
 
 _last = function(series) {
   return _.reduce(series, (function(memo, val) {
-    if (val) {
+    if (val !== null) {
       return val;
     }
     return memo;
@@ -389,7 +389,7 @@ Rickshaw.Graph.JSONP.Graphite = Rickshaw.Class.create(Rickshaw.Graph.JSONP, {
       return _.map(datapoints, function(point) {
         return {
           'x': point[1],
-          'y': point[0] || null_as
+          'y': point[0] !== null ? point[0] : null_as
         };
       });
     };
