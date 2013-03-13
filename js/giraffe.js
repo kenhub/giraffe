@@ -256,6 +256,7 @@ createGraph = function(anchor, metric) {
     width: $("" + anchor + " .chart").width(),
     height: metric.height || 300,
     min: metric.min || 0,
+    max: metric.max || 0,
     null_as: metric.null_as === void 0 ? null : metric.null_as,
     renderer: metric.renderer || 'area',
     interpolation: metric.interpolation || 'step-before',
