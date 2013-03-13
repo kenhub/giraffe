@@ -82,6 +82,7 @@ graphScaffold = ->
                     {{/start_row}}
                       <div class="{{span}}" id="graph-{{graph_id}}">
                         <h2>{{metric_alias}} <span class="pull-right graph-summary"><span></h2>
+                        <div class="y_axis"></div>
                         <div class="chart"></div>
                         <div class="timeline"></div>
                         <p>{{metric_description}}</p>
@@ -197,6 +198,8 @@ createGraph = (anchor, metric) ->
         # tickFormat: (y) -> Rickshaw.Fixtures.Number.formatBase1024KMGTP(d3.format(".2r")(y)) #.toFixed(2).replace('.00','')
         tickFormat: (y) -> _formatBase1024KMGTP(y) #.toFixed(2).replace('.00','')
         ticksTreatment: 'glow'
+        orientation: 'left'
+        element: $("#{anchor} .y_axis")[0]
       yAxis.render()
         # element: $("#{anchor} .y-axis")[0]
       hover_formatter = metric.hover_formatter || _formatBase1024KMGTP

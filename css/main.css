@@ -103,6 +103,14 @@ h2, h3 {
     margin-top: 0px;
     margin-bottom: 0px;
 }
+
+/* css taken from http://code.shutterstock.com/rickshaw/examples/y_axis.html */
+.y_axis {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 40px;
+}
 /* .rickshaw_graph .detail .x_label { */
 /*     display: none; */
 /* } */

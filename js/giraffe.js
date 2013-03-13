@@ -135,7 +135,7 @@ refreshSummary = function(graph) {
 
 graphScaffold = function() {
   var colspan, context, converter, graph_template, i, metric, offset, _i, _len;
-  graph_template = "{{#dashboard_description}}\n    <div class=\"well\">{{{dashboard_description}}}</div>\n{{/dashboard_description}}\n{{#metrics}}\n  {{#start_row}}\n  <div class=\"row-fluid\">\n  {{/start_row}}\n    <div class=\"{{span}}\" id=\"graph-{{graph_id}}\">\n      <h2>{{metric_alias}} <span class=\"pull-right graph-summary\"><span></h2>\n      <div class=\"chart\"></div>\n      <div class=\"timeline\"></div>\n      <p>{{metric_description}}</p>\n      <div class=\"legend\"></div>\n    </div>\n  {{#end_row}}\n  </div>\n  {{/end_row}}\n{{/metrics}}";
+  graph_template = "{{#dashboard_description}}\n    <div class=\"well\">{{{dashboard_description}}}</div>\n{{/dashboard_description}}\n{{#metrics}}\n  {{#start_row}}\n  <div class=\"row-fluid\">\n  {{/start_row}}\n    <div class=\"{{span}}\" id=\"graph-{{graph_id}}\">\n      <h2>{{metric_alias}} <span class=\"pull-right graph-summary\"><span></h2>\n      <div class=\"y_axis\"></div>\n      <div class=\"chart\"></div>\n      <div class=\"timeline\"></div>\n      <p>{{metric_description}}</p>\n      <div class=\"legend\"></div>\n    </div>\n  {{#end_row}}\n  </div>\n  {{/end_row}}\n{{/metrics}}";
   $('#graphs').empty();
   context = {
     metrics: []
@@ -278,7 +278,9 @@ createGraph = function(anchor, metric) {
         tickFormat: function(y) {
           return _formatBase1024KMGTP(y);
         },
-        ticksTreatment: 'glow'
+        ticksTreatment: 'glow',
+        orientation: 'left',
+        element: $("" + anchor + " .y_axis")[0]
       });
       yAxis.render();
       hover_formatter = metric.hover_formatter || _formatBase1024KMGTP;
