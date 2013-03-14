@@ -126,6 +126,8 @@ var dashboards =
         "description": "main system memory usage on production (cardinal interpolation, line renderer)",
         "interpolation": "cardinal",
         "renderer": "line",
+        "max": 150,  // you can specify max value for the y-axis
+        "min": 20,   // and also min
       },
     ]
   },
