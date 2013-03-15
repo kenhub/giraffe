@@ -195,3 +195,7 @@ OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 ##More?
 
 Check out the different [demo dashboards](http://kenhub.github.com/giraffe/) for more information about making your own giraffe awesome.
+
+##Links, Plugins and 3rd party tools
+
+* [giraffe-collectd](https://github.com/bflad/giraffe-collectd) - A simple Giraffe configuration generator for collectd metrics in Graphite (created by @bflad)
