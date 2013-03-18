@@ -169,6 +169,12 @@ best tools for learning anatomy and medicine online. To do that, we wanted to be
 user-engagement and many other aspects. We could have used a 3rd party service, but it was more fun to build our own.
 It's also a chance to contribute to the open source community, which we love so much.
 
+If you use Giraffe and like it, we would really appreciate if you could star this project, link to this github page, and
+tell others. We hope to build a growing community around this project.
+
+We are a very tiny startup with no money, great ideas and good intentions. It would **help us a lot** if you 
+**link to www.kenhub.com** and tell people who are interested in learning anatomy about us.
+
 ##License
 Giraffe is distributed under the MIT license. All 3rd party libraries and components are distributed under their
 respective license terms.
