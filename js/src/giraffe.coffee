@@ -424,7 +424,7 @@ changeDashboard = (dash_name) ->
   description = dashboard['description']
   metrics = dashboard['metrics']
   refresh = dashboard['refresh']
-  period = default_period 
+  period ||= default_period
   init()
   $.bbq.pushState({dashboard: dashboard.name})
 

@@ -577,7 +577,7 @@ changeDashboard = function(dash_name) {
   description = dashboard['description'];
   metrics = dashboard['metrics'];
   refresh = dashboard['refresh'];
-  period = default_period;
+  period || (period = default_period);
   init();
   return $.bbq.pushState({
     dashboard: dashboard.name
