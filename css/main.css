@@ -48,6 +48,12 @@ body > .container {
   text-decoration: none;
 }
 
+.dropdown-menu {
+    max-height: 500px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
 .navbar-inverse .nav li.dropdown > .dropdown-toggle .caret {
     border-top-color: white;
     border-bottom-color: white;
