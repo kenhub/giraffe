@@ -210,6 +210,9 @@ createGraph = (anchor, metric) ->
       @legend = new Rickshaw.Graph.Legend
         graph: graph
         element: $("#{anchor} .legend")[0]
+      highlighter = new Rickshaw.Graph.Behavior.Series.Highlight
+        graph: graph
+        legend: @legend
       shelving = new Rickshaw.Graph.Behavior.Series.Toggle
         graph: graph
         legend: @legend
