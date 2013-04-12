@@ -9,6 +9,7 @@ refresh = dashboard['refresh']
 refreshTimer = null
 auth = auth ? false
 graphs = []
+instance_url="";
 
 dataPoll = ->
   for graph in graphs
@@ -110,9 +111,14 @@ graphScaffold = ->
   $('#graphs').append Mustache.render(graph_template, context)
 
 init = ->
-  $('.dropdown-menu').empty()
+  $('#dropdown-dash').empty()
   for dash in dashboards
-    $('.dropdown-menu').append("<li><a href=\"#\">#{dash.name}</a></li>")
+    $('#dropdown-dash').append("<li><a href=\"#\">#{dash.name}</a></li>")
+  
+  if graphite_url instanceof Array 
+    $('#dropdown-instance').empty()
+    for instance in graphite_url 
+      $('#dropdown-instance').append("<li><a href=\"#\">#{instance.name}</a></li>")
 
   graphScaffold()
 
@@ -148,18 +154,18 @@ generateGraphiteTargets = (targets) ->
 generateDataURL= (targets, annotator_target) ->
   annotator_target = if annotator_target then "&target=#{annotator_target}" else ""
   data_targets = generateGraphiteTargets(targets)
-  "#{graphite_url}/render?from=-#{period}minutes&#{data_targets}#{annotator_target}&format=json&jsonp=?"
+  "#{instance_url}/render?from=-#{period}minutes&#{data_targets}#{annotator_target}&format=json&jsonp=?"
 
 # generate a URL to retrieve events from graphite
 generateEventsURL= (event_tags) ->
   tags = if event_tags is '*' then '' else "&tags=#{event_tags}"
   jsonp = if window.json_fallback then '' else "&jsonp=?"
-  "#{graphite_url}/events/get_data?from=-#{period}minutes#{tags}#{jsonp}"
+  "#{instance_url}/events/get_data?from=-#{period}minutes#{tags}#{jsonp}"
 
 # builds a graph object
 createGraph = (anchor, metric) ->
  
-  if graphite_url == 'demo'
+  if instance_url == 'demo'
     graph_provider = Rickshaw.Graph.Demo
   else
     graph_provider = Rickshaw.Graph.JSONP.Graphite
@@ -413,11 +419,23 @@ Rickshaw.Graph.Demo = Rickshaw.Class.create(Rickshaw.Graph.JSONP.Graphite,
 #   Events and interaction
 ###
 # dashboard selection
-$('.dropdown-menu').on 'click', 'a', ->
+$('#dropdown-dash').on 'click', 'a', ->
   changeDashboard($(this).text())
   $('.dropdown').removeClass('open')
   false
 
+if graphite_url instanceof Array 
+  $('#dropdown-instance').on 'click', 'a', ->
+    instance = _.where(graphite_url, {name: $(this).text()})[0]
+    instance_url = instance.url
+    $('.instance').text(instance.name)
+    init()
+    $('.dropdown').removeClass('open')
+    false
+else
+  $('#dropdown-nav-instance').remove()
+  $('.instance').remove()
+  
 # changing to a different dashboard
 changeDashboard = (dash_name) ->
   dashboard = _.where(dashboards, {name: dash_name})[0] || dashboards[0]
@@ -430,7 +448,7 @@ changeDashboard = (dash_name) ->
 
 # time panel - changing timeframe for graphs
 $('.timepanel').on 'click', 'a.range', ->
-  if graphite_url == 'demo' then changeDashboard(dashboard.name)
+  if instance_url == 'demo' then changeDashboard(dashboard.name)
   period = $(this).attr('data-timeframe') || default_period
   dataPoll()
   timeFrame = $(this).attr('href').replace(/^#/, '')
@@ -484,5 +502,11 @@ $(window).bind 'hashchange', (e) ->
 
 $ ->
   $(window).trigger( 'hashchange' )
+  if graphite_url instanceof Array
+    instance_url = graphite_url[0].url
+    $('.instance').text(graphite_url[0].name)
+  else 
+    instance_url = graphite_url
+    
   init()
 
