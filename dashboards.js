@@ -1,4 +1,4 @@
-var graphite_url = "demo";  // enter your graphite url, e.g. http://your.graphite.com
+var graphite_url = "demo";  // enter your graphite url, e.g. http://your.graphite.com, or if you have multiple instances: [{"name":"instance name","url":"instance url"},{...}]
 
 var dashboards = 
 [
