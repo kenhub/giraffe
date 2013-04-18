@@ -421,7 +421,7 @@ $('.dropdown-menu').on 'click', 'a', ->
   false
 
 # changing to a different dashboard
-changeDashboard = (dash_name) =>
+changeDashboard = (dash_name) ->
   dashboard = _.where(dashboards, {name: dash_name})[0] || dashboards[0]
   graphite_url = dashboard['graphite_url'] || default_graphite_url
   description = dashboard['description']
