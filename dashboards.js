@@ -134,6 +134,7 @@ var dashboards =
   { "name": "Setup",
     "refresh": 10000,
     "scheme": "colorwheel",
+    "graphite_url": "demo",  // you can override the default graphite_url with a dashboard-specific url
     "description": "#Setup and configuration <img class='pull-right' src='img/giraffe.png' />"
                 +"\n"
                 +"\n##Installation"

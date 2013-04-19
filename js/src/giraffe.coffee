@@ -1,4 +1,6 @@
 # giraffe vars
+graphite_url = graphite_url || 'demo'
+default_graphite_url = graphite_url
 default_period = 1440
 scheme = 'classic9' if scheme is undefined
 period = default_period
@@ -421,6 +423,7 @@ $('.dropdown-menu').on 'click', 'a', ->
 # changing to a different dashboard
 changeDashboard = (dash_name) ->
   dashboard = _.where(dashboards, {name: dash_name})[0] || dashboards[0]
+  graphite_url = dashboard['graphite_url'] || default_graphite_url
   description = dashboard['description']
   metrics = dashboard['metrics']
   refresh = dashboard['refresh']
