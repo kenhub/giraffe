@@ -226,11 +226,11 @@ generateGraphiteTargets = function(targets) {
   return graphite_targets;
 };
 
-generateDataURL = function(targets, annotator_target) {
+generateDataURL = function(targets, annotator_target, max_data_points) {
   var data_targets;
   annotator_target = annotator_target ? "&target=" + annotator_target : "";
   data_targets = generateGraphiteTargets(targets);
-  return "" + graphite_url + "/render?from=-" + period + "minutes&" + data_targets + annotator_target + "&format=json&jsonp=?";
+  return "" + graphite_url + "/render?from=-" + period + "minutes&" + data_targets + annotator_target + "&maxDataPoints=" + max_data_points + "&format=json&jsonp=?";
 };
 
 generateEventsURL = function(event_tags) {
@@ -479,7 +479,7 @@ Rickshaw.Graph.JSONP.Graphite = Rickshaw.Class.create(Rickshaw.Graph.JSONP, {
     this.period = period;
     return deferred = $.ajax({
       dataType: 'json',
-      url: generateDataURL(this.args.targets, this.args.annotator_target),
+      url: generateDataURL(this.args.targets, this.args.annotator_target, this.args.width),
       error: this.error.bind(this)
     });
   }

@@ -147,10 +147,10 @@ generateGraphiteTargets = (targets) ->
   return graphite_targets
 
 # generate a URL to retrieve data from graphite
-generateDataURL= (targets, annotator_target) ->
+generateDataURL= (targets, annotator_target, max_data_points) ->
   annotator_target = if annotator_target then "&target=#{annotator_target}" else ""
   data_targets = generateGraphiteTargets(targets)
-  "#{graphite_url}/render?from=-#{period}minutes&#{data_targets}#{annotator_target}&format=json&jsonp=?"
+  "#{graphite_url}/render?from=-#{period}minutes&#{data_targets}#{annotator_target}&maxDataPoints=#{max_data_points}&format=json&jsonp=?"
 
 # generate a URL to retrieve events from graphite
 generateEventsURL= (event_tags) ->
@@ -339,7 +339,7 @@ Rickshaw.Graph.JSONP.Graphite = Rickshaw.Class.create(Rickshaw.Graph.JSONP,
     @period = period
     deferred = $.ajax
       dataType: 'json'
-      url: generateDataURL(@args.targets, @args.annotator_target)
+      url: generateDataURL(@args.targets, @args.annotator_target, @args.width)
       error: @error.bind(@)
 )
 
