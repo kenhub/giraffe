@@ -150,7 +150,8 @@ generateGraphiteTargets = (targets) ->
 generateDataURL= (targets, annotator_target, max_data_points) ->
   annotator_target = if annotator_target then "&target=#{annotator_target}" else ""
   data_targets = generateGraphiteTargets(targets)
-  "#{graphite_url}/render?from=-#{period}minutes&#{data_targets}#{annotator_target}&maxDataPoints=#{max_data_points}&format=json&jsonp=?"
+  cacheTimeout = Math.max(Math.round(period * 60 / max_data_points), 1)
+  "#{graphite_url}/render?from=-#{period}minutes&#{data_targets}#{annotator_target}&maxDataPoints=#{max_data_points}&cacheTimeout=#{cacheTimeout}&format=json&jsonp=?"
 
 # generate a URL to retrieve events from graphite
 generateEventsURL= (event_tags) ->
