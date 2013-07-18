@@ -158,6 +158,7 @@ generateEventsURL= (event_tags) ->
   jsonp = if window.json_fallback then '' else "&jsonp=?"
   "#{graphite_url}/events/get_data?from=-#{period}minutes#{tags}#{jsonp}"
 
+
 # builds a graph object
 createGraph = (anchor, metric) ->
  
@@ -165,6 +166,7 @@ createGraph = (anchor, metric) ->
     graph_provider = Rickshaw.Graph.Demo
   else
     graph_provider = Rickshaw.Graph.JSONP.Graphite
+  unstackable = metric.renderer in ['line', 'scatterplot']
   graph = new graph_provider
     anchor: anchor
     targets: metric.target || metric.targets
@@ -182,7 +184,7 @@ createGraph = (anchor, metric) ->
     null_as: if metric.null_as is undefined then null else metric.null_as
     renderer: metric.renderer || 'area'
     interpolation: metric.interpolation || 'step-before'
-    unstack: metric.unstack
+    unstack: if metric.unstack is undefined then unstackable else metric.unstack
     stroke: if metric.stroke is false then false else true
     strokeWidth: metric.stroke_width
     dataURL: generateDataURL(metric.target || metric.targets)

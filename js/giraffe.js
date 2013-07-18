@@ -241,20 +241,21 @@ generateEventsURL = function(event_tags) {
 };
 
 createGraph = function(anchor, metric) {
-  var graph, graph_provider, _ref, _ref1;
+  var graph, graph_provider, unstackable, _ref, _ref1, _ref2;
   if (graphite_url === 'demo') {
     graph_provider = Rickshaw.Graph.Demo;
   } else {
     graph_provider = Rickshaw.Graph.JSONP.Graphite;
   }
+  unstackable = (_ref = metric.renderer) === 'line' || _ref === 'scatterplot';
   return graph = new graph_provider({
     anchor: anchor,
     targets: metric.target || metric.targets,
     summary: metric.summary,
     summary_formatter: metric.summary_formatter || _formatBase1024KMGTP,
     scheme: metric.scheme || dashboard.scheme || scheme || 'classic9',
-    annotator_target: ((_ref = metric.annotator) != null ? _ref.target : void 0) || metric.annotator,
-    annotator_description: ((_ref1 = metric.annotator) != null ? _ref1.description : void 0) || 'deployment',
+    annotator_target: ((_ref1 = metric.annotator) != null ? _ref1.target : void 0) || metric.annotator,
+    annotator_description: ((_ref2 = metric.annotator) != null ? _ref2.description : void 0) || 'deployment',
     events: metric.events,
     element: $("" + anchor + " .chart")[0],
     width: $("" + anchor + " .chart").width(),
@@ -264,7 +265,7 @@ createGraph = function(anchor, metric) {
     null_as: metric.null_as === void 0 ? null : metric.null_as,
     renderer: metric.renderer || 'area',
     interpolation: metric.interpolation || 'step-before',
-    unstack: metric.unstack,
+    unstack: metric.unstack === void 0 ? unstackable : metric.unstack,
     stroke: metric.stroke === false ? false : true,
     strokeWidth: metric.stroke_width,
     dataURL: generateDataURL(metric.target || metric.targets),
