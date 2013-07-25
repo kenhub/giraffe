@@ -3,116 +3,84 @@
    ========================================================================== */
 
 body {
-    background: url("../img/giraffe-bg.png") fixed center center;
-    padding-top: 40px;
-    padding-bottom: 0;
-}
-
-body > .container {
-    background-color: rgba(255, 255, 255, 0.7);
-    padding: 0 20px 20px;
-    -webkit-oborder-radius: 0 0 8px 8px;
-    -moz-border-radius: 0 0 8px 8px;
-    border-radius: 0 0 8px 8px;
-}
-
-#giraffe-navbar-inner {
-  background-color: #fafafa;
-  background-image: -moz-linear-gradient(top, #ffb100, #d65100);
-  background-image: -ms-linear-gradient(top, #ffb100, #d65100);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffb100), to(#d65100));
-  background-image: -webkit-linear-gradient(top, #ffb100, #d65100);
-  background-image: -o-linear-gradient(top, #ffb100, #d65100);
-  background-image: linear-gradient(top, #ffb100, #d65100);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#'ffb100, endColorstr='#'d65100, GradientType=0);
-  -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
-     -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
-          box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
-}
-
-.navbar .brand {
-  /* color: #d65100; */
-  color: white;
-  text-shadow: none;
-}
-
-.navbar .brand:hover {
-  text-decoration: none;
-  color: white;
-}
-
-.navbar .nav > li > a {
-  /* color: #d65100; */
-  color: white;
-  text-shadow: none;
-  text-decoration: none;
-}
-
-.dropdown-menu {
-    max-height: 500px;
-    overflow-y: auto;
-    overflow-x: hidden;
-}
-
-.navbar-inverse .nav li.dropdown > .dropdown-toggle .caret {
-    border-top-color: white;
-    border-bottom-color: white;
-}
-
-.navbar-inverse .navbar-inner {
-    border-color: #d65100;
-}
-
-.navbar-inverse .nav li.dropdown.open > .dropdown-toggle, .navbar-inverse .nav li.dropdown.active > .dropdown-toggle, .navbar-inverse .nav li.dropdown.open.active > .dropdown-toggle {
-    color: #d65100;
-    background-color: white;
-}
-
-.btn-small, .btn-small.active {
-    color: #d65100;
-}
-
-.page-header h1 {
-    color: #d65100;
-}
-
-h2 {
-    font-size: 24.5px;
-}
-
-h2, h3 {
-    color: #9a5f00;
+	color: #C8C8C8;
+	background: #111;
+	padding-top: 40px;
+	padding-bottom: 0;
 }
 
 .page-header {
-    margin: 0px 0 30px;
-    padding-top: 15px;
+	border-color: #505050;
 }
 
-.dashboard-content {
-    padding-right: 20px;
-    padding-left: 20px;
+.container {
+	width:98%;
+}
+.navbar-static-top .container,.navbar-fixed-top .container,.navbar-fixed-bottom .container {
+	width:98%;
 }
 
-.dashboard-content,
-#graphs {
-    background-color: white;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 1);
-    border-radius: 0 0 8px 8px;
+.dropdown-menu {
+	background-color: rgb(58, 63, 68);
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	border-radius: 6px 6px 6px 6px;
+	box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+	background-clip: padding-box;
 }
+.dropdown-menu > li > a {
+	color: rgb(122, 130, 136);
+}
+
+.navbar-inverse .nav li > a:hover, .navbar-inverse .nav li.active > a, .navbar-inverse .nav li.active > a:hover {
+	background-image: linear-gradient(280deg, rgb(16, 18, 20), rgb(28, 30, 34));
+}
+
+
+.btn {
+	color: rgb(255, 255, 255);
+	text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.25);
+	background-color: rgb(72, 77, 81);
+	background-image: linear-gradient(to bottom, rgb(82, 87, 92), rgb(58, 62, 65));
+	background-repeat: repeat-x;
+	border-width: 1px;
+	border-style: solid;
+	-moz-border-top-colors: none;
+	-moz-border-right-colors: none;
+	-moz-border-bottom-colors: none;
+	-moz-border-left-colors: none;
+	border-image: none;
+	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+	border-radius: 3px 3px 3px 3px;
+}
+.btn, .btn:hover {
+	font-weight: bold;
+	color: rgb(255, 255, 255);
+	text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.3);
+}
+.btn:hover, .btn:focus, .btn:active, .btn.active, .btn.disabled, .btn[disabled] {
+	color: rgb(255, 255, 255);
+	background-color: rgb(58, 62, 65);
+}
+.btn-small {
+	padding: 2px 10px;
+	font-size: 11.9px;
+	border-radius: 3px 3px 3px 3px;
+}
+.btn.active, .btn:active {
+	background-image: none;
+	outline: 0px none;
+	box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15) inset, 0px 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+
+.well {
+	background: #222;
+	color: white;
+	border-color: #505050;
+}
+
+
 .legend {
-    margin-top: 9px;
-    display: none;
+	margin-top: 9px;
+	display: none;
 }
-
-.nav-collapse .btn-toolbar {
-    margin-top: 0px;
-    margin-bottom: 0px;
-}
-/* .rickshaw_graph .detail .x_label { */
-/*     display: none; */
-/* } */
-/* .rickshaw_graph .detail .item.active { */
-/*     opacity:1; */
-/*     display: none; */
-/* } */

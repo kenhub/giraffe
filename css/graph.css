@@ -4,8 +4,9 @@
 	position: relative;
 }
 .rickshaw_graph svg {
-	display: block;	
+	display: block;
 	overflow: hidden;
+	background-color: #222;
 }
 
 /* ticks */
@@ -15,7 +16,7 @@
 	top: 0;
 	bottom: 0;
 	width: 0px;
-	border-left: 1px dotted rgba(0, 0, 0, 0.2);
+	border-left: 1px dotted #ccc;
 	pointer-events: none;
 }
 .rickshaw_graph .x_tick .title {
@@ -32,7 +33,7 @@
 
 .rickshaw_annotation_timeline {
 	height: 1px;
-	border-top: 1px solid #e0e0e0;
+	border-top: 1px solid #ccc;
 	margin-top: 10px;
 	position: relative;
 }
@@ -43,7 +44,7 @@
 	margin-left: -2px;
 	top: -3px;
 	border-radius: 5px;
-	background-color: rgba(0, 0, 0, 0.25);
+	background-color: red;
 }
 .rickshaw_graph .annotation_line {
 	position: absolute;
@@ -58,24 +59,24 @@
 }
 
 .rickshaw_graph .annotation_range {
-        background: rgba(0, 0, 0, 0.1);
-        display: none;
-        position: absolute;
-        top: 0;
-        bottom: -6px;
-        z-index: -10;
+	background: rgba(0, 0, 0, 0.1);
+	display: none;
+	position: absolute;
+	top: 0;
+	bottom: -6px;
+	z-index: -10;
 }
 .rickshaw_graph .annotation_range.active {
-        display: block;
+	display: block;
 }
 .rickshaw_graph .annotation_range.active.offscreen {
-        display: none;
+	display: none;
 }
 
 .rickshaw_annotation_timeline .annotation .content {
 	background: white;
 	color: black;
-	opacity: 0.9;
+	opacity: 0.5;
 	padding: 5px 5px;
 	box-shadow: 0 0 2px rgba(0, 0, 0, 0.8);
 	border-radius: 3px;
@@ -98,7 +99,7 @@
 }
 .rickshaw_annotation_timeline .annotation.active,
 .rickshaw_annotation_timeline .annotation:hover {
-	background-color: rgba(0, 0, 0, 0.8);
+	background-color: white;
 	cursor: none;
 }
 .rickshaw_annotation_timeline .annotation .content:hover {
@@ -115,14 +116,14 @@
 	fill: none;
 }
 .rickshaw_graph .y_ticks .tick {
-	stroke: rgba(0, 0, 0, 0.16);
+	stroke: #ccc;
 	stroke-width: 2px;
 	shape-rendering: crisp-edges;
 	pointer-events: none;
 }
 .rickshaw_graph .y_grid .tick {
 	z-index: -1;
-	stroke: rgba(0, 0, 0, 0.20);
+	stroke: #ccc;
 	stroke-width: 1px;
 	stroke-dasharray: 1 1;
 }
@@ -132,7 +133,7 @@
 }
 .rickshaw_graph .y_ticks path {
 	fill: none;
-	stroke: #808080;
+	stroke: #ccc;
 }
 .rickshaw_graph .y_ticks text {
 	opacity: 0.5;
@@ -141,23 +142,23 @@
 }
 .rickshaw_graph .x_tick.glow .title,
 .rickshaw_graph .y_ticks.glow text {
-	fill: black;
-	color: black;
-	text-shadow: 
-		-1px 1px 0 rgba(255, 255, 255, 0.1),
-		1px -1px 0 rgba(255, 255, 255, 0.1),
-		1px 1px 0 rgba(255, 255, 255, 0.1),
-		0px 1px 0 rgba(255, 255, 255, 0.1),
-		0px -1px 0 rgba(255, 255, 255, 0.1),
-		1px 0px 0 rgba(255, 255, 255, 0.1),
-		-1px 0px 0 rgba(255, 255, 255, 0.1),
-		-1px -1px 0 rgba(255, 255, 255, 0.1);
+	fill: white;
+	color: white;
+	text-shadow:
+		-1px 1px 0 rgba(0, 0, 0, 0.8),
+		1px -1px 0 rgba(0, 0, 0, 0.8),
+		1px 1px 0 rgba(0, 0, 0, 0.8),
+		0px 1px 0 rgba(0, 0, 0, 0.8),
+		0px -1px 0 rgba(0, 0, 0, 0.8),
+		1px 0px 0 rgba(0, 0, 0, 0.8),
+		-1px 0px 0 rgba(0, 0, 0, 0.8),
+		-1px -1px 0 rgba(0, 0, 0, 0.8);
 }
 .rickshaw_graph .x_tick.inverse .title,
 .rickshaw_graph .y_ticks.inverse text {
 	fill: white;
 	color: white;
-	text-shadow: 
+	text-shadow:
 		-1px 1px 0 rgba(0, 0, 0, 0.8),
 		1px -1px 0 rgba(0, 0, 0, 0.8),
 		1px 1px 0 rgba(0, 0, 0, 0.8),
