@@ -205,3 +205,4 @@ Check out the different [demo dashboards](http://kenhub.github.com/giraffe/) for
 ##Links, Plugins and 3rd party tools
 
 * [giraffe-collectd](https://github.com/bflad/giraffe-collectd) - A simple Giraffe configuration generator for collectd metrics in Graphite (created by @bflad)
+* [giraffe-web](https://github.com/jedi4ever/giraffe-web.js) - a node.js server wrapper and cli - also allows proxying your graphite server (created by @jedi4ever)
