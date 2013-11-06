@@ -341,7 +341,7 @@ Rickshaw.Graph.JSONP.Graphite = Rickshaw.Class.create(Rickshaw.Graph.JSONP, {
           return el.target === _this.args.annotator_target.replace(/["']/g, '');
         }), _this.args.null_as);
       }
-      for (i = _i = 0, _len = series.length; _i < _len; i = ++_i) {
+      for (i = _i = 0, _len = Math.min(series.length, _this.graph.series.length); _i < _len; i = ++_i) {
         el = series[i];
         _this.graph.series[i].data = el.data;
         _this.addTotals(i);
