@@ -162,6 +162,8 @@ The core code lives in `js/src/giraffe.coffee`.
 Since the `dashboards.js` configuration needs easy access to everything inside `giraffe.js`, please compile the coffeescript
 using the `--bare` option.
 
+* To submit a pull request, please make sure your changes are going into the original `giraffe.coffee`. Patches to the compiled `js` file cannot be merged on their own.
+
 ##Who is behind Giraffe?
 
 Giraffe was developed at [kenHub](https://www.kenhub.com). We are not much of techie startup, but we hope to build the
