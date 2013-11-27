@@ -179,7 +179,7 @@ createGraph = (anchor, metric) ->
     element: $("#{anchor} .chart")[0]
     width: $("#{anchor} .chart").width()
     height: metric.height || 300
-    min: metric.min || 0
+    min: metric.min || 'auto'
     max: metric.max
     null_as: if metric.null_as is undefined then null else metric.null_as
     renderer: metric.renderer || 'area'
