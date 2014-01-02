@@ -22,6 +22,7 @@ var dashboards =
         "description": "New signups to the website",  // enter your metric description here
         "summary": "sum",  // available options: [sum|min|max|avg|last|<function>]
         "summary_formatter": d3.format(",f") // customize your summary format function. see d3 formatting docs for more options
+        // also supported are tick_formatter to customize y axis ticks, and totals_formatter to format the values in the legend
       },
       {
         "alias": "signup breakdown",
@@ -99,6 +100,7 @@ var dashboards =
         "description": "cpu utilization on production (using linear interpolation). Summary displays the average across all series",
         "interpolation": "linear",  // you can use different rickshaw interpolation values
         "stroke_width": 1,  // change stroke width
+        "stroke": stroke,  // stoke may be true, false or a function that takes and returns a d3 rgb color to style the stroke
         "summary": "avg",
       },
       {
@@ -184,3 +186,5 @@ var scheme = [
 function relative_period() { return (typeof period == 'undefined') ? 1 : parseInt(period / 7) + 1; }
 function entire_period() { return (typeof period == 'undefined') ? 1 : period; }
 function at_least_a_day() { return entire_period() >= 1440 ? entire_period() : 1440; }
+
+function stroke(color) { return color.brighter().brighter() }
