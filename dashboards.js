@@ -102,6 +102,11 @@ var dashboards =
         "stroke_width": 1,  // change stroke width
         "stroke": stroke,  // stoke may be true, false or a function that takes and returns a d3 rgb color to style the stroke
         "summary": "avg",
+        "totals_fields": ["min", "max", "avg"],  // customize which totals are shown in the legend
+        "summary_formatter": format_pct,
+        "hover_formatter": format_pct,
+        "totals_formatter": format_pct,  // customize the formatting of the legend totals
+        "tick_formatter": format_pct,  // and also the y axis ticks
       },
       {
         "alias": "proc mem prod",
@@ -188,3 +193,4 @@ function entire_period() { return (typeof period == 'undefined') ? 1 : period; }
 function at_least_a_day() { return entire_period() >= 1440 ? entire_period() : 1440; }
 
 function stroke(color) { return color.brighter().brighter() }
+function format_pct(n) { return d3.format(",f")(n) + "%" }
