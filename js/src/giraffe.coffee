@@ -172,6 +172,8 @@ createGraph = (anchor, metric) ->
     targets: metric.target || metric.targets
     summary: metric.summary
     summary_formatter: metric.summary_formatter || _formatBase1024KMGTP
+    totals_formatter: metric.totals_formatter || _formatBase1024KMGTP
+    totals_fields: metric.totals_fields || ["sum", "min", "max", "avg"]
     scheme: metric.scheme || dashboard.scheme || scheme || 'classic9'
     annotator_target: metric.annotator?.target || metric.annotator
     annotator_description: metric.annotator?.description || 'deployment'
@@ -179,13 +181,14 @@ createGraph = (anchor, metric) ->
     element: $("#{anchor} .chart")[0]
     width: $("#{anchor} .chart").width()
     height: metric.height || 300
-    min: metric.min || 0
+    min: metric.min || 'auto'
     max: metric.max
     null_as: if metric.null_as is undefined then null else metric.null_as
     renderer: metric.renderer || 'area'
     interpolation: metric.interpolation || 'step-before'
     unstack: if metric.unstack is undefined then unstackable else metric.unstack
     stroke: if metric.stroke is false then false else true
+    stroke_fn: metric.stroke if typeof metric.stroke is "function"
     strokeWidth: metric.stroke_width
     dataURL: generateDataURL(metric.target || metric.targets)
     onRefresh: (transport) ->
@@ -198,9 +201,7 @@ createGraph = (anchor, metric) ->
       xAxis.render()
       yAxis = new Rickshaw.Graph.Axis.Y
         graph: graph
-        # tickFormat: d3.format(".2r") #Rickshaw.Fixtures.Number.formatBase1024KMGTP(y).toFixed(2).replace('.00','')
-        # tickFormat: (y) -> Rickshaw.Fixtures.Number.formatBase1024KMGTP(d3.format(".2r")(y)) #.toFixed(2).replace('.00','')
-        tickFormat: (y) -> _formatBase1024KMGTP(y) #.toFixed(2).replace('.00','')
+        tickFormat: metric.tick_formatter || (y) -> _formatBase1024KMGTP(y)
         ticksTreatment: 'glow'
       yAxis.render()
         # element: $("#{anchor} .y-axis")[0]
@@ -238,7 +239,6 @@ Rickshaw.Graph.JSONP.Graphite = Rickshaw.Class.create(Rickshaw.Graph.JSONP,
       result_data = @preProcess(result_data)
       # success is called once to build the initial graph
       @success(@parseGraphiteData(result_data, @args.null_as)) if not @graph
-
       series = @parseGraphiteData(result_data, @args.null_as)
       annotations = @parseGraphiteData(_.filter(result, (el) =>
         el.target == @args.annotator_target.replace(/["']/g, '')), @args.null_as) if @args.annotator_target
@@ -259,13 +259,19 @@ Rickshaw.Graph.JSONP.Graphite = Rickshaw.Class.create(Rickshaw.Graph.JSONP,
     label = $(@legend.lines[i].element).find('span.label').text()
     $(@legend.lines[i].element).find('span.totals').remove()
     series_data = _.map(@legend.lines[i].series.data, (d) -> d.y)
-    sum = _formatBase1024KMGTP(_sum(series_data))
-    max = _formatBase1024KMGTP(_max(series_data))
-    min = _formatBase1024KMGTP(_min(series_data))
-    avg = _formatBase1024KMGTP(_avg(series_data))
+    sum = @args.totals_formatter(_sum(series_data))
+    max = @args.totals_formatter(_max(series_data))
+    min = @args.totals_formatter(_min(series_data))
+    avg = @args.totals_formatter(_avg(series_data))
 
-    $(@legend.lines[i].element).append("<span class='totals pull-right'> &Sigma;: #{sum} <i class='icon-caret-down'></i>: #{min} <i class='icon-caret-up'></i>: #{max} <i class='icon-sort'></i>: #{avg}</span>")
+    totals = "<span class='totals pull-right'>"
+    totals = totals + " &Sigma;: #{sum}" if "sum" in @args.totals_fields
+    totals = totals + " <i class='icon-caret-down'></i>: #{min}" if "min" in @args.totals_fields
+    totals = totals + " <i class='icon-caret-up'></i>: #{max}" if "max" in @args.totals_fields
+    totals = totals + " <i class='icon-sort'></i>: #{avg}" if "avg" in @args.totals_fields
+    totals += "</span>"
 
+    $(@legend.lines[i].element).append(totals)
 
   preProcess: (result) ->
     for item in result
@@ -293,12 +299,18 @@ Rickshaw.Graph.JSONP.Graphite = Rickshaw.Class.create(Rickshaw.Graph.JSONP,
     palette = new Rickshaw.Color.Palette
       scheme: @args.scheme
     targets = @args.target || @args.targets
+    stroke_fn = @args.stroke_fn
     d = _.map d, (el) ->
       if typeof targets in ["string", "function"]
         color = palette.color()
       else
         color = getTargetColor(targets, el.target) || palette.color()
-      return {"color": color, "name": el.target, "data": rev_xy(el.datapoints)}
+      return {
+        color: color
+        stroke: stroke_fn(d3.rgb(color)) if stroke_fn?
+        name: el.target
+        data: rev_xy(el.datapoints)
+      }
     Rickshaw.Series.zeroFill(d)
     return d
 
@@ -394,7 +406,9 @@ Rickshaw.Graph.Demo = Rickshaw.Class.create(Rickshaw.Graph.JSONP.Graphite,
               data: @seriesData[6],
               name: 'New York'
           }
-      ]
+      ].map((s) =>
+        s.stroke = @args.stroke_fn(d3.rgb(s.color)) if @args.stroke_fn?
+        s)
 
     @graph.renderer.unstack = @args.unstack
     @graph.render()

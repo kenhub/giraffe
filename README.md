@@ -12,7 +12,7 @@ Need a quick way to install and play with graphite? try [graphite-fabric](https:
 Giraffe is based on a number of amazing open-source projects and libraries, to name a few:
 
 * The [Rickshaw](http://code.shutterstock.com/rickshaw/) charting library (based on [d3](http://mbostock.github.com/d3/))
-* [HTML5 Boilerplate](http://html5boilerplate.com/) and [Twitter Bootstrap](https://github.com/twitter/bootstrap)
+* [HTML5 Boilerplate](http://html5boilerplate.com/) and [Bootstrap](https://github.com/twbs/bootstrap)
 * Written in (but does not require) [Coffeescript](http://coffeescript.org)
 * Other libraries such as [jQuery](http://jquery.com), [underscore.js](http://underscorejs.org), [jQuery BBQ](http://benalman.com/projects/jquery-bbq-plugin/), [pagedown](), [{{mustache}}](https://github.com/janl/mustache.js/) and more
 
@@ -20,7 +20,7 @@ Giraffe is based on a number of amazing open-source projects and libraries, to n
 
 Giraffe is heavily inspired by several existing graphite dashboards. Primarily:
 
-* [GDash](https://github.com/ripienaar/gdash) - it uses twitter bootstrap and allows multiple dashboards to be configured. However, it requires running a sinatra server, and the graphs are pulled directly from graphite rather than rendered via a js charting library.
+* [GDash](https://github.com/ripienaar/gdash) - it uses Bootstrap and allows multiple dashboards to be configured. However, it requires running a sinatra server, and the graphs are pulled directly from graphite rather than rendered via a js charting library.
 * [Tasseo](https://github.com/obfuscurity/tasseo) - also allows multiple dashboards, but still relies on a server component. Tasseo also uses Rickshaw, but charts only a single data series. Giraffe started as a tasseo fork, but eventually got refactored (almost) beyond recognition.
 * [Graphene](https://github.com/jondot/graphene) - a d3-based relatime dashboard with different widgets. Supports a single dashboard, and its charting functionality is not as extensive as with Richshaw.
 
@@ -162,6 +162,8 @@ The core code lives in `js/src/giraffe.coffee`.
 Since the `dashboards.js` configuration needs easy access to everything inside `giraffe.js`, please compile the coffeescript
 using the `--bare` option.
 
+* To submit a pull request, please make sure your changes are going into the original `giraffe.coffee`. Patches to the compiled `js` file cannot be merged on their own.
+
 ##Who is behind Giraffe?
 
 Giraffe was developed at [kenHub](https://www.kenhub.com). We are not much of techie startup, but we hope to build the
@@ -205,3 +207,4 @@ Check out the different [demo dashboards](http://kenhub.github.com/giraffe/) for
 ##Links, Plugins and 3rd party tools
 
 * [giraffe-collectd](https://github.com/bflad/giraffe-collectd) - A simple Giraffe configuration generator for collectd metrics in Graphite (created by @bflad)
+* [giraffe-web](https://github.com/jedi4ever/giraffe-web.js) - a node.js server wrapper and cli - also allows proxying your graphite server (created by @jedi4ever)
