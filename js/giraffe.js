@@ -263,7 +263,7 @@ createGraph = function(anchor, metric) {
     element: $("" + anchor + " .chart")[0],
     width: $("" + anchor + " .chart").width(),
     height: metric.height || 300,
-    min: metric.min || 'auto',
+    min: metric.min === void 0 ? 'auto' : metric.min,
     max: metric.max,
     null_as: metric.null_as === void 0 ? null : metric.null_as,
     renderer: metric.renderer || 'area',
