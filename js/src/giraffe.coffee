@@ -134,6 +134,13 @@ getTargetColor = (targets, target) ->
     if t.target == target or t.alias == target
       return t.color
 
+getTargetRenderer = (targets, target) ->
+  return unless typeof targets is 'object'
+  for t in targets
+    continue unless t.renderer
+    if t.target == target or t.alias == target
+      return t.renderer
+
 generateGraphiteTargets = (targets) ->
   # checking if single target (string) or a function
   if typeof targets is "string" then return "&target=#{targets}"
@@ -305,8 +312,10 @@ Rickshaw.Graph.JSONP.Graphite = Rickshaw.Class.create(Rickshaw.Graph.JSONP,
         color = palette.color()
       else
         color = getTargetColor(targets, el.target) || palette.color()
+        renderer = getTargetRenderer(targets, el.target) || 'line'
       return {
         color: color
+        renderer: renderer
         stroke: stroke_fn(d3.rgb(color)) if stroke_fn?
         name: el.target
         data: rev_xy(el.datapoints)
