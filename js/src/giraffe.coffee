@@ -389,31 +389,38 @@ Rickshaw.Graph.Demo = Rickshaw.Class.create(Rickshaw.Graph.JSONP.Graphite,
           {
               color: palette.color(),
               data: @seriesData[0],
-              name: 'Moscow'
+              name: 'Moscow',
+              renderer: 'line'
           }, {
               color: palette.color(),
               data: @seriesData[1],
-              name: 'Shanghai'
+              name: 'Shanghai',
+              renderer: 'line'
           }, {
               color: palette.color(),
               data: @seriesData[2],
-              name: 'Amsterdam'
+              name: 'Amsterdam',
+              renderer: 'bar'
           }, {
               color: palette.color(),
               data: @seriesData[3],
-              name: 'Paris'
+              name: 'Paris',
+              renderer: 'line'
           }, {
               color: palette.color(),
               data: @seriesData[4],
-              name: 'Tokyo'
+              name: 'Tokyo',
+              renderer: 'line'
           }, {
               color: palette.color(),
               data: @seriesData[5],
-              name: 'London'
+              name: 'London',
+              renderer: 'line'
           }, {
               color: palette.color(),
               data: @seriesData[6],
-              name: 'New York'
+              name: 'New York',
+              renderer: 'line'
           }
       ].map((s) =>
         s.stroke = @args.stroke_fn(d3.rgb(s.color)) if @args.stroke_fn?

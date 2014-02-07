@@ -112,8 +112,9 @@ var dashboards =
         "alias": "proc mem prod",
         "targets": ["aliasByNode(derivative(servers.system.cpu.user),4)",  // targets array can include strings, 
                                                                            // functions or dictionaries
-                   {target: 'alias(derivative(servers.system.cpu.system,"system utilization")',
-                    alias: 'system utilization',                           // if you use a graphite alias, specify it here
+                   // an example of a target object
+                    {target: 'alias(derivative(servers.system.cpu.system,"system utilization")',
+                    alias: 'system utilization',                           // this alias *must* match the graphite alias.
                     color: '#f00'}],                                       // you can also specify a target color this way
                                                                            // (note that these values are ignored on the demo)
         // annotator can also be a dictionary of target and description.
@@ -135,6 +136,28 @@ var dashboards =
         "renderer": "line",
         "max": 150,  // you can specify max value for the y-axis
         "min": 20,   // and also min
+      },
+      {
+        "alias": "System Load (Multi Renderer)",
+        // an example of a multi renderer. When renderer is set to multi
+        // each target can have its own renderer. E.g. to mix between a line and bar charts.
+        "renderer": 'multi',
+        "target": "aliasByNode(derivative(servers.system.cpu.*),4)",  // target can use any graphite-supported wildcards
+        "targets": [
+            {'target': 'aliasByNode(servers.server06.system.load.load,1)',
+             'color': '#A99', 'renderer': 'bar', 'alias': 'server06'},
+            {'target':
+             'alias(movingAverage(servers.server06.system.load.load,"-5min"),' +
+             '"Moving Average of 5 segments")', 'color': '#F00',
+             'alias': 'Moving Average of 5 segments',
+             'renderer': 'line'}
+        ],
+        "interpolation": "linear",
+        "description": "multi renderer (line and bars on the same chart)",
+        "annotator": {'target' : 'events.deployment',
+                      'description' : 'deploy'},
+        "max": 150,
+        "colspan": 3
       },
     ]
   },
