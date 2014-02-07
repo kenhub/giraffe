@@ -1,5 +1,6 @@
 # Changelog for Giraffe
 
+* Version 1.1.0 - added support for renderer: multi
 * Version 1.0.3 - bug fix for `min: 0` (#55)
 * Version 1.0.2 - more configuration options
   - Stroke color in area renderer can be a function that takes the graph color
