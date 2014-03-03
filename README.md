@@ -22,7 +22,7 @@ Giraffe is heavily inspired by several existing graphite dashboards. Primarily:
 
 * [GDash](https://github.com/ripienaar/gdash) - it uses Bootstrap and allows multiple dashboards to be configured. However, it requires running a sinatra server, and the graphs are pulled directly from graphite rather than rendered via a js charting library.
 * [Tasseo](https://github.com/obfuscurity/tasseo) - also allows multiple dashboards, but still relies on a server component. Tasseo also uses Rickshaw, but charts only a single data series. Giraffe started as a tasseo fork, but eventually got refactored (almost) beyond recognition.
-* [Graphene](https://github.com/jondot/graphene) - a d3-based relatime dashboard with different widgets. Supports a single dashboard, and its charting functionality is not as extensive as with Richshaw.
+* [Graphene](https://github.com/jondot/graphene) - a d3-based relatime dashboard with different widgets. Supports a single dashboard, and its charting functionality is not as extensive as with Rickshaw.
 
 ##Why another dashboard?
 
