@@ -25,7 +25,7 @@
 	opacity: 0.5;
 	white-space: nowrap;
 	margin-left: 3px;
-	bottom: 1px;
+	bottom: -20px;
 }
 
 /* annotations */
@@ -34,7 +34,7 @@
 	height: 1px;
 	border-top: 1px solid #e0e0e0;
 	margin-top: 10px;
-	position: relative;
+	position: absolute;
 }
 .rickshaw_annotation_timeline .annotation {
 	position: absolute;

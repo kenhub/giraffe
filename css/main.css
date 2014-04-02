@@ -75,7 +75,9 @@ body > .container {
 .page-header h1 {
     color: #d65100;
 }
-
+p{
+	margin-top: 12px;
+}
 h2 {
     font-size: 24.5px;
 }
@@ -101,7 +103,7 @@ h2, h3 {
     border-radius: 0 0 8px 8px;
 }
 .legend {
-    margin-top: 9px;
+    margin-top: 17px;
     display: none;
 }
 
