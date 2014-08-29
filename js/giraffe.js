@@ -284,6 +284,7 @@ createGraph = function(anchor, metric) {
     null_as: metric.null_as === void 0 ? null : metric.null_as,
     renderer: metric.renderer || 'area',
     interpolation: metric.interpolation || 'step-before',
+    offset: metric.offset || 'value',
     unstack: metric.unstack === void 0 ? unstackable : metric.unstack,
     stroke: metric.stroke === false ? false : true,
     stroke_fn: typeof metric.stroke === "function" ? metric.stroke : void 0,

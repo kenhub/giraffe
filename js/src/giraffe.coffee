@@ -193,6 +193,7 @@ createGraph = (anchor, metric) ->
     null_as: if metric.null_as is undefined then null else metric.null_as
     renderer: metric.renderer || 'area'
     interpolation: metric.interpolation || 'step-before'
+    offset: metric.offset || 'value'
     unstack: if metric.unstack is undefined then unstackable else metric.unstack
     stroke: if metric.stroke is false then false else true
     stroke_fn: metric.stroke if typeof metric.stroke is "function"
