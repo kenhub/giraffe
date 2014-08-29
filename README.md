@@ -74,7 +74,7 @@ var dashboards =
         "target": "sumSeries(stats.*.event)",  // target can use any graphite-supported wildcards
         "description": "signup breakdown based on site location",
         "renderer": "area",  // use any rickshaw-supported renderer
-        "unstack": true  // other parameters like unstack, interpolation, stroke are also available (see rickshaw documentation for more info)
+        "unstack": true  // other parameters like unstack, interpolation, stroke, offset are also available (see rickshaw documentation for more info)
         "colspan": 3  // the graph can span across 1,2 or 3 columns
       },
       {
