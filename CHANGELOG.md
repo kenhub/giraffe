@@ -1,5 +1,6 @@
 # Changelog for Giraffe
 
+* Version 1.3.0 - updated Rickshaw to latest version
 * Version 1.2.0 - added support for offset param
 * Version 1.1.1 - Moving the X axis text down
 * Version 1.1.0 - added support for renderer: multi
