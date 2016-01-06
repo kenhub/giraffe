@@ -186,7 +186,7 @@ createGraph = (anchor, metric) ->
     annotator_description: metric.annotator?.description || 'deployment'
     events: metric.events
     element: $("#{anchor} .chart")[0]
-    width: $("#{anchor} .chart").width()
+    width: metric.width || $("#{anchor} .chart").width() || 300
     height: metric.height || 300
     min: if metric.min is undefined then 'auto' else metric.min
     max: metric.max
