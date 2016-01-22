@@ -294,11 +294,35 @@ createGraph = function(anchor, metric) {
       return refreshSummary(transport);
     },
     onComplete: function(transport) {
-      var detail, hover_formatter, shelving, xAxis, yAxis;
+      var AppropriateTimeUnit, detail, hover_formatter, shelving, xAxis, yAxis;
       graph = transport.graph;
+      AppropriateTimeUnit = function() {
+        var domain, l_format, l_retVal, rangeSeconds, time, unit, units;
+        unit = void 0;
+        time = new Rickshaw.Fixtures.Time();
+        units = time.units;
+        domain = graph.x.domain();
+        rangeSeconds = domain[1] - domain[0];
+        units.forEach(function(u) {
+          if (Math.floor(rangeSeconds / u.seconds) >= 2) {
+            unit = unit || u;
+          }
+          return void 0;
+        });
+        l_retVal = unit || time.units[time.units.length - 1];
+        l_format = "%H:%M";
+        if (l_retVal.seconds >= 3600 * 24) {
+          l_format = "%a %H:%M";
+        }
+        l_retVal.formatter = function(d) {
+          return (d3.time.format(l_format))(new Date(d));
+        };
+        return l_retVal;
+      };
       xAxis = new Rickshaw.Graph.Axis.Time({
         graph: graph
       });
+      xAxis.appropriateTimeUnit = AppropriateTimeUnit;
       xAxis.render();
       yAxis = new Rickshaw.Graph.Axis.Y({
         graph: graph,
@@ -313,6 +337,9 @@ createGraph = function(anchor, metric) {
         graph: graph,
         yFormatter: function(y) {
           return hover_formatter(y);
+        },
+        xFormatter: function(x) {
+          return new Date(x * 1000).toLocaleString();
         }
       });
       $(anchor + " .legend").empty();
