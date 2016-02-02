@@ -11,6 +11,9 @@ refresh = dashboard['refresh']
 refreshTimer = null
 auth = auth ? false
 graphs = []
+graphite_timezone = graphite_timezone || 'Etc/UTC'
+graphite_date_locale = graphite_date_locale || "EN"
+moment.locale(graphite_date_locale)
 
 dataPoll = ->
   for graph in graphs
@@ -220,12 +223,12 @@ createGraph = (anchor, metric) ->
         )
 
         l_retVal = unit || time.units[time.units.length - 1]
-        l_format = "%H:%M"
+        l_format = "LT"
 
         if l_retVal.seconds >= 3600 * 24
-          l_format = "%a %H:%M"
+          l_format = "ll"
 
-        l_retVal.formatter = (d) -> (d3.time.format(l_format))(new Date(d))
+        l_retVal.formatter = (d) -> moment.tz(new Date(d), graphite_timezone).format(l_format)
 
         return l_retVal
 
@@ -246,7 +249,8 @@ createGraph = (anchor, metric) ->
       detail = new Rickshaw.Graph.HoverDetail
         graph: graph
         yFormatter: (y) -> hover_formatter(y)
-        xFormatter: (x) -> new Date(x * 1000).toLocaleString()
+        xFormatter: (x) ->
+           moment.tz(new Date(x * 1000), graphite_timezone).format("lll")
 
       # a bit of an ugly hack, but some times onComplete
       # seems to be called twice, generating duplicate legend
