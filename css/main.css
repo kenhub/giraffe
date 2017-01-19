@@ -3,8 +3,7 @@
    ========================================================================== */
 
 body {
-    background: url("../img/giraffe-bg.png") fixed center center;
-    padding-top: 40px;
+    padding-top: 0;
     padding-bottom: 0;
 }
 
