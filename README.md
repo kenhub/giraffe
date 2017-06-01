@@ -1,13 +1,16 @@
-#Giraffe : A [Graphite](http://graphite.wikidot.com) Dashboard with a long neck ![giraffe logo](https://raw.github.com/kenhub/giraffe/master/img/giraffe.png)
+# Giraffe : A [Graphite](http://graphite.wikidot.com) Dashboard with a long neck ![giraffe logo](https://raw.github.com/kenhub/giraffe/master/img/giraffe.png)
 
-##Don't know Graphite?
+## NOTE
+This project isn't actively developed or maintained. There are lots of alternative [visualization tools](http://graphite.readthedocs.io/en/latest/tools.html#visualization) for Graphite and other time-series backends. I don't have any experience using it, but if you're looking for a Graphite dashboard, [Grafana](https://grafana.com/) seems like a good choice.
+
+## Don't know Graphite?
 
 ... then Giraffe is probably not for you. But before you walk away - you should definitely check out graphite! [see
 why](http://codeascraft.etsy.com/2011/02/15/measure-anything-measure-everything/). 
 
 Need a quick way to install and play with graphite? try [graphite-fabric](https://github.com/gingerlime/graphite-fabric).
 
-##Stack
+## Stack
 
 Giraffe is based on a number of amazing open-source projects and libraries, to name a few:
 
@@ -16,7 +19,7 @@ Giraffe is based on a number of amazing open-source projects and libraries, to n
 * Written in (but does not require) [Coffeescript](http://coffeescript.org)
 * Other libraries such as [jQuery](http://jquery.com), [underscore.js](http://underscorejs.org), [jQuery BBQ](http://benalman.com/projects/jquery-bbq-plugin/), [pagedown](), [{{mustache}}](https://github.com/janl/mustache.js/) and more
 
-##Inspiration
+## Inspiration
 
 Giraffe is heavily inspired by several existing graphite dashboards. Primarily:
 
@@ -24,11 +27,11 @@ Giraffe is heavily inspired by several existing graphite dashboards. Primarily:
 * [Tasseo](https://github.com/obfuscurity/tasseo) - also allows multiple dashboards, but still relies on a server component. Tasseo also uses Rickshaw, but charts only a single data series. Giraffe started as a tasseo fork, but eventually got refactored (almost) beyond recognition.
 * [Graphene](https://github.com/jondot/graphene) - a d3-based relatime dashboard with different widgets. Supports a single dashboard, and its charting functionality is not as extensive as with Rickshaw.
 
-##Why another dashboard?
+## Why another dashboard?
 
 Because we wanted to create a dashboard that has all the benefits and none of the downsides of the other dashboards. And because it was interesting to try something new. Giraffe is not necessarily better than any of those solutions. It's a different animal. It has an interesting pattern and a funny face.
 
-##Benefits
+## Benefits
 
 * **No server required** - Giraffe can be installed on any server, or even run from a folder. Just copy the files and you're done.
 * **Beautiful, real-time visualization** - using Rickshaw to create visually appealing, interactive charts.
@@ -36,15 +39,15 @@ Because we wanted to create a dashboard that has all the benefits and none of th
 * **Easy to use** - configuration is done from [one (javascript) file](https://github.com/kenhub/giraffe/blob/master/dashboards.js) with a reasonbly clear and documented options. You
   don't even need to know javascript to configure it. Be aware that it's not very tolerant to typos or missing commas.
 
-##Issues
+## Issues
 
 * There's no such thing as a free lunch
 * Consequently, when adding many metrics to a single dashboard, and particularly when metrics have many data points and
   series, the experience might get sluggish. With great power comes great responsibility. Design your dashboards with care.
 
-##Configuration
+## Configuration
 
-###Quick overview
+### Quick overview
 
 Almost all configuration is placed in one file : [dashboards.js](https://github.com/kenhub/giraffe/blob/master/dashboards.js). Here's a small snippet with some key configuration options:
 
@@ -147,24 +150,22 @@ Until it does, you can do one of the following:
 
 thanks to @mattpascoe for his suggestion and help testing this.
 
-###More configuration options
+### More configuration options
 
 * see [dashboards.js](https://github.com/kenhub/giraffe/blob/master/dashboards.js)
 * check out the [demo](http://kenhub.github.com/giraffe/) to see some of the configuration options in-action 
 * Clone the repository or [download](https://github.com/kenhub/giraffe/archive/master.zip) and take your giraffe for a spin. You can run it from your desktop.
 
-##Development
+## Development
 
-Feedback, suggestions and bug reports are most welcome. But of course code speaks louder than words. Feel free to make
-contributions via pull requests on github.
+No longer actively maintained.
 
 The core code lives in `js/src/giraffe.coffee`.
 Since the `dashboards.js` configuration needs easy access to everything inside `giraffe.js`, please compile the coffeescript
 using the `--bare` option.
 
-* To submit a pull request, please make sure your changes are going into the original `giraffe.coffee`. Patches to the compiled `js` file cannot be merged on their own.
 
-##Who is behind Giraffe?
+## Who is behind Giraffe?
 
 Giraffe was developed at [kenHub](https://www.kenhub.com). We are not much of techie startup, but we hope to build the
 best tools for learning anatomy and medicine online. To do that, we wanted to be able to measure our application,
@@ -177,7 +178,7 @@ tell others. We hope to build a growing community around this project.
 We are a very tiny startup with no money, great ideas and good intentions. It would **help us a lot** if you 
 **link to www.kenhub.com** and tell people who are interested in learning anatomy about us.
 
-##License
+## License
 Giraffe is distributed under the MIT license. All 3rd party libraries and components are distributed under their
 respective license terms.
 
@@ -200,11 +201,11 @@ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER I
 OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
 
-##More?
+## More?
 
 Check out the different [demo dashboards](http://kenhub.github.com/giraffe/) for more information about making your own giraffe awesome.
 
-##Links, Plugins and 3rd party tools
+## Links, Plugins and 3rd party tools
 
 * [giraffe-collectd](https://github.com/bflad/giraffe-collectd) - A simple Giraffe configuration generator for collectd metrics in Graphite (created by @bflad)
 * [giraffe-web](https://github.com/jedi4ever/giraffe-web.js) - a node.js server wrapper and cli - also allows proxying your graphite server (created by @jedi4ever)
