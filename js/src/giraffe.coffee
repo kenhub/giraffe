@@ -11,6 +11,9 @@ refresh = dashboard['refresh']
 refreshTimer = null
 auth = auth ? false
 graphs = []
+graphite_timezone = graphite_timezone || 'Etc/UTC'
+graphite_date_locale = graphite_date_locale || "EN"
+moment.locale(graphite_date_locale)
 
 dataPoll = ->
   for graph in graphs
@@ -203,10 +206,39 @@ createGraph = (anchor, metric) ->
       refreshSummary(transport)
     onComplete: (transport) ->
       graph = transport.graph
+
+      AppropriateTimeUnit = () ->
+        unit = undefined
+        time = new Rickshaw.Fixtures.Time()
+        units = time.units
+
+        domain = graph.x.domain()
+        rangeSeconds = domain[1] - domain[0]
+
+        units.forEach((u) ->
+          if Math.floor(rangeSeconds / u.seconds) >= 2
+            unit = unit || u
+
+          undefined
+        )
+
+        l_retVal = unit || time.units[time.units.length - 1]
+        l_format = "LT"
+
+        if l_retVal.seconds >= 3600 * 24
+          l_format = "ll"
+
+        l_retVal.formatter = (d) -> moment.tz(new Date(d), graphite_timezone).format(l_format)
+
+        return l_retVal
+
       # graph.onUpdate(addAnotations)
       xAxis = new Rickshaw.Graph.Axis.Time
         graph: graph
+
+      xAxis.appropriateTimeUnit = AppropriateTimeUnit
       xAxis.render()
+
       yAxis = new Rickshaw.Graph.Axis.Y
         graph: graph
         tickFormat: metric.tick_formatter || (y) -> _formatBase1024KMGTP(y)
@@ -217,6 +249,9 @@ createGraph = (anchor, metric) ->
       detail = new Rickshaw.Graph.HoverDetail
         graph: graph
         yFormatter: (y) -> hover_formatter(y)
+        xFormatter: (x) ->
+           moment.tz(new Date(x * 1000), graphite_timezone).format("lll")
+
       # a bit of an ugly hack, but some times onComplete
       # seems to be called twice, generating duplicate legend
       $("#{anchor} .legend").empty()
